@@ -119,7 +119,7 @@ $(function(){
             
             this.input = this.$el.find("#group-title");
 
-            this.reqsGroups.fetch();
+            this.reqsGroups.fetch(); 
 
             return this;
         }
