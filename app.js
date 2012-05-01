@@ -1,7 +1,11 @@
 $(function(){
 
     var Requirement = Backbone.Model.extend({
-
+        initialize: function() {
+            if (!this.get("comments")) {
+                this.set({"comments": ''});
+            }
+        } 
     });
 
     var Requirements = Backbone.Collection.extend({
@@ -38,29 +42,41 @@ $(function(){
         },
         template: _.template($("#list-template").html()),
         initialize: function() {
-            _.bindAll(this, 'render', 'add', 'create');
+            _.bindAll(this, 'render', 'add', 'addAll', 'create');
 
             this.collection = this.options.reqsGroup.get('reqs');
             this.collection.bind('add', this.add, this);
+            this.collection.bind('reset', this.addAll, this);
 
             this.title = this.options.reqsGroup.get('title');
+            this.groupId = this.options.reqsGroup.get('groupId');
         },
         add: function(req){
             var view = new ItemView({model: req});
             this.$("ul").append(view.render().el);
+        },
+        addAll: function(){
+            this.collection.each(this.add);
         },
         create: function(){
             if (!this.input.val()) return;
 
             this.collection.create({
                 title: this.input.val(),
-                reqId: '1.1.1.' + (this.collection.length + 1)
+                reqId: this.groupId + '.1.' + (this.collection.length + 1),
+                comments: this.comments.val()
             });
+
             this.input.val('');
+            this.comments.val('');
         },
         render: function() {
             this.$el.html(this.template({title: this.title}));
             this.input = this.$el.find("#title");
+            this.comments = this.$el.find("#comments");
+
+            this.collection.fetch();
+
             return this;
         }
     });
@@ -72,18 +88,29 @@ $(function(){
         template: _.template($("#page-template").html()),
         el: 'body',
         initialize: function() {
-            _.bindAll(this, 'render');
+            _.bindAll(this, 'render', 'add', 'addAll', 'create');
 
             this.reqsGroups = new RequirementsGroups();
+
+            this.reqsGroups.bind('reset', this.addAll, this);
+            this.reqsGroups.bind('add', this.add, this);
+        },
+        add: function(reqsGroup){
+            var listView = new ListView({
+                reqsGroup: reqsGroup
+            });
+            this.$('#content').append(listView.render().el);
+        },
+        addAll: function(){
+            this.reqsGroups.each(this.add);
         },
         create: function(){
             if (!this.input.val()) return;
-
-            var listView = new ListView({
-                reqsGroup: this.reqsGroups.create({title: this.input.val()})
+       
+            this.reqsGroups.create({
+                title: this.input.val(),
+                groupId: '1.' + (this.reqsGroups.length + 1)
             });
-            
-            this.$('#content').append(listView.render().el);
 
             this.input.val('');
         },
@@ -91,6 +118,8 @@ $(function(){
             this.$el.html(this.template());
             
             this.input = this.$el.find("#group-title");
+
+            this.reqsGroups.fetch();
 
             return this;
         }
