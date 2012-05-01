@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Requirements (Alpha)</title>
+    <script src="underscore.min.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="backbone.min.js"></script>
+    <script src="backbone-localstorage.js"></script>
+    <script src="app.js"></script>
+    <!-- Templates -->
+    <script type="text/template" id="page-template">
+        <h1>Requirements Manager</h1>
+        <label for="group-title">Group Title:</label>
+        <input id="group-title" name="group-title" size="30" type="text">
+        <button id="create-group">New Group</button>
+        <div id="content"></div>
+    </script>
+    <script type="text/template" id="list-template">
+        <h3><%= title %></h3>
+        <label for="title">Title:</label>
+        <input id="title" name="title" size="30" type="text">
+        <button>Save</button>
+        <ul class="reqs"></ul>
+        <hr>
+    </script>
+    <script type="text/template" id="item-template">
+        <%= reqId %> : <%= title %>
+    </script>
+</head>
+<body>
+</body>
+</html>
