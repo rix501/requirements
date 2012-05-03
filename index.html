@@ -1,15 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" manifest="offline.appcache">
 <head>
     <title>Requirements (Alpha)</title>
-    <script src="underscore.min.js"></script>
-    <script src="jquery.min.js"></script>
-    <script src="backbone.min.js"></script>
-    <script src="backbone-localstorage.js"></script>
-    <script src="app.js"></script>
 
-    <link rel="stylesheet" href="bootstrap.min.css" type="text/css" />  
-    <link rel="stylesheet" href="style.css" type="text/css" />  
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css" />  
+    <link rel="stylesheet" href="/css/style.css" type="text/css" />  
+
     <!-- Templates -->
     <script type="text/template" id="page-template">
         <div class="navbar navbar-fixed-top">
@@ -49,8 +45,35 @@
     </script>
     <script type="text/template" id="item-template">
         <h3> <%= reqId %> : <%= title %> </h3>
-        <p><%= comments %></p>
+        <span class="md-comments"><%= commentsMD %></span>
     </script>
+    <script type="text/template" id="edit-item-template">
+        <div class="modal fade" id="edit-item-modal">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h3>Edit Requirement : <%= reqId %></h3>
+            </div>
+            <div class="modal-body">
+                <label for="edit-title">Title:</label>
+                <input id="edit-title" class="span3" name="edit-title" type="text" value="<%= title %>">
+                <label for="edit-comments">Comments:</label>
+                <textarea id="edit-comments" name="edit-comments"><%= comments %></textarea>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">Close</a>
+                <a href="#" class="btn btn-primary save">Save changes</a>
+            </div>
+        </div>
+    </script>
+
+    <script src="/js/vendor/underscore.min.js"></script>
+    <script src="/js/vendor/jquery.min.js"></script>
+    <script src="/js/vendor/backbone.min.js"></script>
+    <script src="/js/vendor/backbone-localstorage.js"></script>
+    <script src="/js/vendor/markdown.js"></script>
+    <script src="/js/vendor/bootstrap-transition.js"></script>
+    <script src="/js/vendor/bootstrap-modal.js"></script>
+    <script src="/js/app.js"></script>
 </head>
 <body>
 </body>
