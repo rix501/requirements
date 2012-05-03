@@ -4,6 +4,7 @@ $(function(){
         initialize: function() {
             if (!this.get("comments")) {
                 this.set({"comments": ''});
+                this.set({"commentsMD": ''});
             }
         } 
     });
@@ -25,10 +26,40 @@ $(function(){
     });
 
     var ItemView = Backbone.View.extend({
+        events: {
+            "dblclick" : "edit"
+        },
         template: _.template($("#item-template").html()),
         tagName: 'li',
+        className: 'req-item',
         initialize: function() {
-            _.bindAll(this, 'render');
+            _.bindAll(this, 'render', 'edit');
+
+            this.model.bind('change', this.render, this);
+        },
+        edit: function(){
+            var modal = _.template($("#edit-item-template").html());
+            var $modal = $(modal(this.model.toJSON()));
+
+            $modal.on('hidden', function () {
+                $modal.remove();
+            });
+
+            $modal.find('.save').on('click', _.bind(function(){
+                var attrs = {
+                    title: $modal.find('#edit-title').val(),
+                    comments: $modal.find('#edit-comments').val(),
+                    commentsMD: markdown.toHTML( $modal.find('#edit-comments').val() )
+                }
+
+                this.model.save(attrs, {
+                    success: function(){
+                        $modal.modal('hide');
+                    }
+                });
+            }, this));
+
+            $modal.modal('show');
         },
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
@@ -53,7 +84,7 @@ $(function(){
         },
         add: function(req){
             var view = new ItemView({model: req});
-            this.$("ul").append(view.render().el);
+            this.$("ul.reqs").append(view.render().el);
         },
         addAll: function(){
             this.collection.each(this.add);
@@ -64,7 +95,8 @@ $(function(){
             this.collection.create({
                 title: this.input.val(),
                 reqId: this.groupId + '.1.' + (this.collection.length + 1),
-                comments: this.comments.val()
+                comments: this.comments.val(),
+                commentsMD: markdown.toHTML(this.comments.val())
             });
 
             this.input.val('');
