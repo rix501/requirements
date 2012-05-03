@@ -4,20 +4,20 @@ CACHE MANIFEST
 
 CACHE:
 
-/css/style.css
-/css/bootstrap.min.css
-/css/bootstrap-responsive.min.css
+css/style.css
+css/bootstrap.min.css
+css/bootstrap-responsive.min.css
 
-/js/vendor/backbone-localstorage.js
-/js/vendor/backbone.min.js
-/js/vendor/bootstrap-modal.js
-/js/vendor/bootstrap-transition.js
-/js/vendor/jquery.min.js
-/js/vendor/markdown.js
-/js/vendor/underscore.min.js
-/js/app.js
+js/vendor/backbone-localstorage.js
+js/vendor/backbone.min.js
+js/vendor/bootstrap-modal.js
+js/vendor/bootstrap-transition.js
+js/vendor/jquery.min.js
+js/vendor/markdown.js
+js/vendor/underscore.min.js
+js/app.js
 
-/index.html
+index.html
 
 NETWORK:
 
