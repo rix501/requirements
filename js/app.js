@@ -100,7 +100,7 @@ $(function(){
 
     var ItemView = Backbone.View.extend({
         events: {
-            "dblclick" : "edit"
+            "click" : "edit"
         },
         template: _.template($("#item-template").html()),
         tagName: 'li',
@@ -122,7 +122,7 @@ $(function(){
 
     var ListView = Backbone.View.extend({
         events: {
-            "dblclick h2" : "toggleList",
+            "click h2" : "toggleList",
             "click button": "create",
             "keyup .search"  : "search"
         },
