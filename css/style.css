@@ -1,3 +1,45 @@
 body {
     padding: 50px;
 }
+
+.form-horizontal {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.reqgroup {
+    margin-bottom: 20px;
+}
+
+.reqgroup h2 {
+    margin: -20px;
+    display: inline;
+    cursor: pointer;
+}
+
+.reqgroup button,
+.reqgroup .search {
+    float: right;
+}
+
+.reqgroup .search {
+    margin-right: 20px;
+}
+
+.reqs:first-child {
+    border-top: 2px solid #999;
+}
+
+.reqs {
+    border-bottom: 2px solid #999;
+}
+
+.req-item:first-child {
+    border-top: 1px solid #999;
+}
+
+.req-item {
+    border-bottom: 1px solid #999;
+    padding: 10px 0;
+    cursor: pointer;
+}
