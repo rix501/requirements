@@ -1,0 +1,16 @@
+{
+  "author": "Ricardo J. Vazquez <rix501@gmail.com>",
+  "name": "Requisita",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rix501/requirements.git"
+  },
+  "main": "server.js",
+  "engines": {
+    "node":">=0.6"
+  },
+  "dependencies": {
+    "express":"=2.5.8"
+  }
+}
