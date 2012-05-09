@@ -134,9 +134,12 @@ $(function(){
             this.collection = this.model.get('reqs');
             this.collection.bind('add', this.add, this);
             this.collection.bind('reset', this.addAll, this);
+            this.collection.bind('all', this.render, this);
 
             this.title = this.model.get('title');
             this.groupId = this.model.get('groupId');
+
+            this.collection.fetch();
         },
         add: function(req){
             var view = new ItemView({model: req});
@@ -162,6 +165,7 @@ $(function(){
             this.$('ul.reqs').toggle();
             this.$('.btn').toggle();
             this.$('.search').toggle();
+            this.$('.count').toggle();
         },
         renderList : function(reqs){
             this.$("ul.reqs").html('');
@@ -171,8 +175,11 @@ $(function(){
             return this;
         },
         render: function() {
-            this.$el.html(this.template({title: this.title}));
-            this.collection.fetch();
+            this.$el.html(this.template({
+                title: this.title,
+                count: this.collection.length
+            }));
+            this.addAll();
 
             return this;
         }

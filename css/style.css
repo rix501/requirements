@@ -17,6 +17,10 @@ body {
     cursor: pointer;
 }
 
+.reqgroup h2 .count{
+    display: none;
+}
+
 .reqgroup button,
 .reqgroup .search {
     float: right;
