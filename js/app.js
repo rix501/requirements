@@ -160,6 +160,8 @@ $(function(){
         },
         toggleList: function(){
             this.$('ul.reqs').toggle();
+            this.$('.btn').toggle();
+            this.$('.search').toggle();
         },
         renderList : function(reqs){
             this.$("ul.reqs").html('');
