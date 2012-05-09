@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" manifest="offline.appcache">
+<!-- <html lang="en" manifest="offline.appcache"> -->
+<html lang="en">
 <head>
-    <title>Requirements (Alpha)</title>
+    <title>Requisita (Alpha)</title>
 
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />  
     <link rel="stylesheet" href="css/style.css" type="text/css" />  
@@ -11,15 +12,19 @@
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="brand" href="#">Requirements Manager</a>
+                    <a class="brand" href="#">Requisita</a>
                 </div>
             </div>
         </div>
         <div class="container">
             <div class="form-horizontal">
                 <label for="group-title">Group Title:</label>
-                <input id="group-title" class="span3" name="group-title" type="text">
-                <button class="btn" id="create-group">New Group</button>
+                <input class="group-title" class="span3" name="group-title" type="text">
+                <button class="btn" class="create-group">New Group</button>
+            </div>
+            <div class="form-horizontal">
+                <label for="search-all">Search:</label>
+                <input class="search-all" class="span3" name="search-all" type="text">
             </div>
             <hr>
             <div id="content"></div>
@@ -27,42 +32,36 @@
     </script>
     <script type="text/template" id="list-template">
         <h2><%= title %></h2>
+        <button class="btn">New</button>
+        <input class="search" class="span3" name="search" type="text" placeholder="Search">
         <div class="row">
-            <div class="span4">
-                <div class="form-horizontal">
-                    <label for="title">Title:</label>
-                    <input id="title" name="title" size="30" type="text">
-                    <label for="comments">Comments:</label>
-                    <textarea id="comments" name="comments"></textarea> <br /><br />
-                    <button class="btn">Save</button>
-                </div>
-            </div>
-            <div class="span8">
-                <ul class="reqs"></ul>
-            </div>
+            <ul class="reqs unstyled"></ul>
         </div>
-        <hr>
     </script>
     <script type="text/template" id="item-template">
-        <h3> <%= reqId %> : <%= title %> </h3>
-        <span class="md-comments"><%= commentsMD %></span>
+        <div class="row">
+            <div class="span4">
+                <h3> <%= reqId %> : <%= title %> </h3>
+            </div>
+            <div class="span8">
+                <span class="md-comments"><%= commentsMD %></span>
+            </div>
+        </div>
     </script>
     <script type="text/template" id="edit-item-template">
-        <div class="modal fade" id="edit-item-modal">
-            <div class="modal-header">
-                <a class="close" data-dismiss="modal">×</a>
-                <h3>Edit Requirement : <%= reqId %></h3>
-            </div>
-            <div class="modal-body">
-                <label for="edit-title">Title:</label>
-                <input id="edit-title" class="span3" name="edit-title" type="text" value="<%= title %>">
-                <label for="edit-comments">Comments:</label>
-                <textarea id="edit-comments" name="edit-comments"><%= comments %></textarea>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn" data-dismiss="modal">Close</a>
-                <a href="#" class="btn btn-primary save">Save changes</a>
-            </div>
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>Edit Requirement : <%= reqId %></h3>
+        </div>
+        <div class="modal-body">
+            <label for="edit-title">Title:</label>
+            <input class="edit-title" class="span3" name="edit-title" type="text" value="<%= title %>">
+            <label for="edit-comments">Comments:</label>
+            <textarea class="edit-comments" name="edit-comments"><%= comments %></textarea>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
+            <a href="#" class="btn btn-primary save">Save changes</a>
         </div>
     </script>
     <script src="js/vendor/underscore.min.js"></script>
