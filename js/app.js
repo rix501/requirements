@@ -17,7 +17,7 @@ $(function(){
     var RequirementsGroup = Backbone.Model.extend({
         initialize: function() {
             this.set({'reqs': new Requirements()});
-            this.get('reqs').localStorage = new Store("reqs-" + this.get('title') + "-store")
+            this.get('reqs').localStorage = new Store("reqs-" + this.get('title') + "-store");
         },
         search : function(letters){
             if(letters == "") return this.get('reqs');
@@ -31,7 +31,6 @@ $(function(){
 
     var RequirementsGroups = Backbone.Collection.extend({
         model: RequirementsGroup,
-        localStorage: new Store("reqs-group-store"),
         search : function(letters){
             if(letters == "") return this;
      
@@ -40,6 +39,18 @@ $(function(){
                 return pattern.test(reqsGroup.get("title")) ||  reqsGroup.search(letters).size() > 0 ;
             }));
         }
+    });
+
+    var Section = Backbone.Model.extend({
+        initialize: function() {
+            this.set({'reqs-groups': new RequirementsGroups()});
+            this.get('reqs-groups').localStorage = new Store("reqs-" + this.get('title') + "-group-store");
+        },
+    });
+
+    var Sections = Backbone.Collection.extend({
+        model: Section,
+        localStorage: new Store("reqs-sections-store")
     });
 
     /** VIEWS **/
@@ -59,7 +70,7 @@ $(function(){
 
             if(!_.isUndefined(this.collection) && _.isUndefined(this.model)){
                 this.model = new Requirement({
-                    reqId: this.groupId + '.1.' + (this.collection.length + 1)
+                    reqId: this.groupId + '.' + (this.collection.length + 1)
                 });
             }
 
@@ -120,14 +131,14 @@ $(function(){
         }
     });
 
-    var ListView = Backbone.View.extend({
+    var GroupView = Backbone.View.extend({
         events: {
             "click h2" : "toggleList",
             "click button": "create",
             "keyup .search"  : "search"
         },
-        template: _.template($("#list-template").html()),
-        className: "reqgroup span9",
+        template: _.template($("#group-template").html()),
+        className: "reqgroup",
         initialize: function() {
             _.bindAll(this, 'render', 'add', 'addAll', 'create');
 
@@ -185,27 +196,26 @@ $(function(){
         }
     });
 
-    var PageView = Backbone.View.extend({
+    var ListView = Backbone.View.extend({
         events: {
             "click .create-group": "create",
             "keypress .group-title"  : "updateOnEnter",
             "keyup .search-all"  : "search"
         },
-        template: _.template($("#page-template").html()),
-        el: 'body',
+        template: _.template($("#list-template").html()),
         initialize: function() {
             _.bindAll(this, 'render', 'add', 'addAll', 'create');
 
-            this.collection = new RequirementsGroups();
-
             this.collection.bind('reset', this.addAll, this);
             this.collection.bind('add', this.add, this);
+
+            this.sectionId = this.options.sectionId;
         },
         add: function(reqsGroup){
-            var listView = new ListView({
+            var listView = new GroupView({
                 model: reqsGroup
             });
-            this.$('#content').append(listView.render().el);
+            this.$('#groups').append(listView.render().el);
         },
         addAll: function(){
             this.collection.each(this.add);
@@ -215,7 +225,7 @@ $(function(){
        
             this.collection.create({
                 title: this.input.val(),
-                groupId: '1.' + (this.collection.length + 1)
+                groupId: this.sectionId + '.' + (this.collection.length + 1)
             });
 
             this.input.val('');
@@ -228,7 +238,7 @@ $(function(){
             this.renderList(this.collection.search(letters));
         },
         renderList : function(reqsGroups){
-            this.$('#content').html('');
+            this.$('#groups').html('');
      
             reqsGroups.each(this.add);
 
@@ -240,6 +250,125 @@ $(function(){
             this.input = this.$el.find(".group-title");
 
             this.collection.fetch(); 
+
+            return this;
+        }
+    });
+
+    var SectionView = Backbone.View.extend({
+        events: { 
+            'click .section' : 'switch'
+        },
+        template: _.template($("#section-template").html()),
+        tagName: 'li',
+        initialize: function() {
+            _.bindAll(this, 'render');
+
+            //this.model.bind('change', this.render, this);
+
+            this.collection = this.model.get('reqs-groups');
+
+            this.title = this.model.get('title');
+            this.sectionId = this.model.get('sectionId');
+        },
+        add: function(){
+            var listView = new ListView({
+                collection: this.collection,
+                sectionId: this.sectionId
+            });
+
+            //Its out of scope
+            $('.list').html(listView.render().el);
+        },
+        switch: function(){
+            $('.nav-list li.active').removeClass('active');
+
+            this.$el.addClass('active');
+
+            this.add();
+
+            return false;
+        },
+        render: function() {
+            this.$el.html(this.template(this.model.toJSON()));
+
+            return this;
+        }
+    });
+
+    var SectionsView = Backbone.View.extend({
+        events: {
+            'click .add-section' : 'edit',
+            'keypress .section-title'  : 'editPress',
+            'blur .section-title' : 'blured'
+        },
+        template: _.template($("#sections-template").html()),
+        tagName: 'ul',
+        className: 'nav nav-list',
+        initialize: function() {
+            _.bindAll(this, 'render', 'add', 'addAll', 'edit', 'create');
+
+            this.collection = new Sections();
+
+            this.collection.bind('reset', this.addAll, this);
+            this.collection.bind('add', this.add, this);
+        },
+        blured: function(){
+            var input = this.$('.section-title');
+            var title = input.val();
+
+            if(title == '') input.remove();
+        },
+        editPress: function(event){
+            if (event.keyCode == 13) this.create();
+        },
+        edit: function(event){
+            var input = '<li><input class="section-title span3" name="section-title" type="text"></li>';
+
+            this.$('.divider').before(input);
+            return false;
+        },
+        create: function(){
+            var input = this.$('.section-title');
+            var title = input.val();
+            input.remove();
+
+            if(title != ''){
+                this.collection.create({
+                    title: title,
+                    sectionId: this.collection.length + 1
+                });
+            }
+        },
+        add: function(section){
+            var sectionView = new SectionView({
+                model: section
+            });
+            this.$('.divider').before(sectionView.render().el);
+        },
+        addAll: function(){
+            this.collection.each(this.add);
+        },
+        render: function() {
+            this.$el.html(this.template());
+            
+            this.collection.fetch(); 
+
+            return this;
+        }
+    });
+
+    var PageView = Backbone.View.extend({
+        template: _.template($("#page-template").html()),
+        el: 'body',
+        initialize: function() {
+            _.bindAll(this, 'render');
+        },
+        render: function() {
+            this.$el.html(this.template());
+            
+            var sectionsView = new SectionsView();
+            this.$('.sections').append(sectionsView.render().el);
 
             return this;
         }

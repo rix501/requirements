@@ -23,46 +23,36 @@
         </div>
         <div class="container-fluid">
             <div class="row-fluid">
-                <div class="span3">
-                    <div class="well sidebar-nav">
-                        <ul class="nav nav-list">
-                            <li class="nav-header">Sections</li>
-                            <li class="active"><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Add</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="form-horizontal span4">
-                    <label for="group-title">Group Title:</label>
-                    <input class="group-title" class="span3" name="group-title" type="text">
-                    <button class="btn create-group">New Group</button> 
-                </div>
-                <div class="form-horizontal span4">
-                    <label for="search-all">Search:</label>
-                    <input class="search-all" class="span3" name="search-all" type="text">
-                </div>
-                <hr class="span9">
-                <div id="content" class="span9"></div>
+                <div class="span3 well sidebar-nav sections"></div>
+                <div class="list span8"></div>
             </div>
         </div>
     </script>
+    <script type="text/template" id="section-template">
+        <a href="#" class="section"><%= title %></a>
+    </script>
+    <script type="text/template" id="sections-template">
+        <li class="nav-header">Sections</li>
+        <li class="divider"></li>
+        <li><a href="#" class="add-section">Add</a></li>
+    </script>
     <script type="text/template" id="list-template">
+        <div class="form-horizontal">
+            <label for="group-title">Group Title:</label>
+            <input class="group-title" name="group-title" type="text">
+            <button class="btn create-group">New Group</button> 
+        </div>
+        <div class="form-horizontal">
+            <label for="search-all">Search:</label>
+            <input class="search-all" name="search-all" type="text">
+        </div>
+        <hr>
+        <div id="groups"></div>
+    </script>
+    <script type="text/template" id="group-template">
         <h2><%= title %> <span class="count"><small>(<%= count %>)</small> </span> </h2> 
         <button class="btn">New</button>
-        <input class="search" class="span3" name="search" type="text" placeholder="Search">
+        <input class="search span3" name="search" type="text" placeholder="Search">
         <div class="row-fluid">
             <ul class="reqs unstyled"></ul>
         </div>
@@ -84,7 +74,7 @@
         </div>
         <div class="modal-body">
             <label for="edit-title">Title:</label>
-            <input class="edit-title" class="span3" name="edit-title" type="text" value="<%= title %>">
+            <input class="edit-title span3" name="edit-title" type="text" value="<%= title %>">
             <label for="edit-comments">Comments:</label>
             <textarea class="edit-comments" name="edit-comments"><%= comments %></textarea>
         </div>

@@ -2,6 +2,10 @@ body {
     padding: 50px;
 }
 
+.sections input {
+    margin-top: 10px;
+}
+
 .form-horizontal {
     display: inline-block;
     margin-right: 20px;
