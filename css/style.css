@@ -12,7 +12,6 @@ body {
 }
 
 .reqgroup h2 {
-    margin: -20px;
     display: inline;
     cursor: pointer;
 }

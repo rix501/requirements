@@ -127,7 +127,7 @@ $(function(){
             "keyup .search"  : "search"
         },
         template: _.template($("#list-template").html()),
-        className: "reqgroup span12",
+        className: "reqgroup span9",
         initialize: function() {
             _.bindAll(this, 'render', 'add', 'addAll', 'create');
 
