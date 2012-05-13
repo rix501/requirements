@@ -2,6 +2,14 @@ body {
     padding: 50px;
 }
 
+.page-header h1 {
+    display: inline;
+}
+
+.page-header button {
+    float: right;
+}
+
 .sections input {
     margin-top: 10px;
 }

@@ -1,5 +1,4 @@
 $(function(){
-
     /** MODELS **/
 
     var Requirement = Backbone.Model.extend({
@@ -95,6 +94,8 @@ $(function(){
                     success: this.hide
                 });
             }
+
+            return false;
         },
         hide: function(){
             this.$el.modal('hide');
@@ -358,9 +359,9 @@ $(function(){
         }
     });
 
-    var PageView = Backbone.View.extend({
-        template: _.template($("#page-template").html()),
-        el: 'body',
+    var RequirementsView = Backbone.View.extend({
+        template: _.template($("#requirements-template").html()),
+        className: 'row-fluid',
         initialize: function() {
             _.bindAll(this, 'render');
         },
@@ -374,6 +375,59 @@ $(function(){
         }
     });
 
-    var pageView = new PageView();
-    pageView.render();
+    var ProjectsView = Backbone.View.extend({
+        template: _.template($("#projects-template").html()),
+        className: 'row-fluid',
+        initialize: function() {
+            _.bindAll(this, 'render');
+        },
+        render: function() {
+            this.$el.html(this.template());
+
+            return this;
+        }
+    });
+
+    var PageView = Backbone.View.extend({
+        template: _.template($("#page-template").html()),
+        el: 'body',
+        initialize: function() {
+            _.bindAll(this, 'render');
+        },
+        render: function() {
+            this.$el.html(this.template());
+
+            return this;
+        }
+    });
+
+    /** ROUTES **/
+
+    window.Requisita = Backbone.Router.extend({
+        routes: {
+            '': 'home',
+            ':project/requirements' : 'requirements'
+        },
+        initialize: function() {
+            this.pageView = new PageView();
+            this.pageView.render();
+
+            this.currentView = null;
+        },
+        updateContent: function(){
+            this.pageView.$('#content').html(this.currentView.render().el);
+        },
+        home: function() {
+            this.currentView = new ProjectsView();
+            this.updateContent();
+        },
+        requirements: function(project) {
+            this.currentView = new RequirementsView();
+            this.updateContent();
+        }
+    });
+
+    // Kick off the application
+    window.App = new Requisita();
+    Backbone.history.start();
 });
