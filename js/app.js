@@ -258,7 +258,7 @@ $(function(){
 
     var SectionView = Backbone.View.extend({
         events: { 
-            'click .section' : 'switch'
+            'click .section' : 'switchList'
         },
         template: _.template($("#section-template").html()),
         tagName: 'li',
@@ -281,7 +281,7 @@ $(function(){
             //Its out of scope
             $('.list').html(listView.render().el);
         },
-        switch: function(){
+        switchList: function(){
             $('.nav-list li.active').removeClass('active');
 
             this.$el.addClass('active');
@@ -324,6 +324,8 @@ $(function(){
             if (event.keyCode == 13) this.create();
         },
         edit: function(event){
+            if(this.$('.section-title').length == 0) return;
+            
             var input = '<li><input class="section-title span3" name="section-title" type="text"></li>';
 
             this.$('.divider').before(input);
