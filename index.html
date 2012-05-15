@@ -23,58 +23,30 @@
         </div>
         <div id="content" class="container-fluid"></div>
     </script>
+    <script type="text/template" id="project-template">
+        <h3><%= title %></h3>
+        <br />
+        <div class="btn-group">
+            <a href="#/<%= id %>/requirements" class="btn">Requirements</a>
+            <!-- <a href="#" class="btn">Minutes</a> -->
+        </div>
+    </script>
     <script type="text/template" id="projects-template">
-        <div class="page-header"><h1>Projects</h1> <button class="btn">Add New Project</button></div>
-        <div class="span2 well">
-            <h3>Project 1</h3>
-            <br />
-            <div class="btn-group">
-                <a href="#/project/requirements" class="btn">Requirements</a>
-                <a href="#" class="btn">Minutes</a>
-            </div>
+        <div class="page-header"><h1>Projects</h1> <button class="btn add-project">Add New Project</button></div>
+        <div class="projects"></div>
+    </script>
+    <script type="text/template" id="edit-project-template">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>Edit Project : <%= projectId %></h3>
         </div>
-        <div class="span2 well">
-            <h3>Project 2</h3>
-            <br />
-            <div class="btn-group">
-                <a href="#/project/requirements" class="btn">Requirements</a>
-                <a href="#" class="btn">Minutes</a>
-            </div>
+        <div class="modal-body">
+            <label for="edit-title">Title:</label>
+            <input class="edit-title span3" name="edit-title" type="text" value="<%= title %>">
         </div>
-        <div class="span2 well">
-            <h3>Project 3</h3>
-            <br />
-            <div class="btn-group">
-                <a href="#/project/requirements" class="btn">Requirements</a>
-                <a href="#" class="btn">Minutes</a>
-            </div>
-        </div>
-        <div class="span2 well">
-            <h3>Project 4</h3>
-            <br />
-            <div class="btn-group">
-                <a href="#/project/requirements" class="btn">Requirements</a>
-                <a href="#" class="btn">Minutes</a>
-            </div>
-        </div>
-        <div class="span2 well">
-            <h3>Project 5</h3>
-            <br />
-            <div class="btn-group">
-                <a href="#/project/requirements" class="btn">Requirements</a>
-                <a href="#" class="btn">Minutes</a>
-            </div>
-        </div>
-        <div class="span2 well">
-            <h3>Project 6</h3>
-            <br />
-            <div class="btn-group">
-                <a href="#/project/requirements" class="btn">Requirements</a>
-                <a href="#" class="btn">Minutes</a>
-            </div>
-        </div>
-        <div class="span2" >
-            
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
+            <a href="#" class="btn btn-primary save">Save changes</a>
         </div>
     </script>
     <script type="text/template" id="requirements-template">

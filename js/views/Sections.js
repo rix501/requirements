@@ -18,7 +18,9 @@ function(Sections, SectionView) {
         initialize: function() {
             _.bindAll(this, 'render', 'add', 'addAll', 'edit', 'create');
 
-            this.collection = new Sections();
+            this.projectId = this.options.projectId;
+
+            this.collection = window.Projects.get(this.projectId).get('sections');
 
             this.collection.bind('reset', this.addAll, this);
             this.collection.bind('add', this.add, this);

@@ -1,29 +1,26 @@
 define([
-    'models/Requirement',
+    'models/Project',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
     'order!vendor/backbone.min', 
     'order!vendor/bootstrap-transition', 
-    'order!vendor/bootstrap-modal', 
-    'order!vendor/markdown'
+    'order!vendor/bootstrap-modal'
 ], 
-function(Requirement) {  
+function(Project) {  
     return Backbone.View.extend({
         events: {
             "click .save" : "save",
             "hidden" : "remove"
         },
-        template: _.template($("#edit-item-template").html()),
+        template: _.template($("#edit-project-template").html()),
         tagName: 'div',
         className: 'modal fade edit-item-modal',
         initialize: function() {
             _.bindAll(this, 'render', 'save', 'hide', 'remove');
 
-            this.groupId = this.options.groupId;
-
             if(!_.isUndefined(this.collection) && _.isUndefined(this.model)){
-                this.model = new Requirement({
-                    reqId: this.groupId + '.' + (this.collection.length + 1)
+                this.model = new Project({
+                    projectId: (this.collection.length + 1)
                 });
             }
         },
@@ -31,20 +28,20 @@ function(Requirement) {
             if (!this.$('.edit-title').val()) return;
 
             var attrs = {
-                reqId: this.model.get('reqId'),
+                projectId: this.model.get('projectId'),
                 title: this.$('.edit-title').val(),
-                comments: this.$('.edit-comments').val(),
-                commentsMD: markdown.toHTML( this.$('.edit-comments').val() ),
             }
 
             if(this.model.collection){
                 this.model.save(attrs, {
-                    success: this.hide
+                    success: this.hide,
+                    wait: true
                 });
             }
             else if(this.collection){
                 this.collection.create(attrs, {
-                    success: this.hide
+                    success: this.hide,
+                    wait: true
                 });
             }
 

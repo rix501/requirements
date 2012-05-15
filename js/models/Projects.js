@@ -1,12 +1,13 @@
 define([
-    'models/Section',
+    'models/Project',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
     'order!vendor/backbone.min',
     'order!vendor/backbone-localstorage'
 ], 
-function(Section) {  
+function(Project) {  
     return Backbone.Collection.extend({
-        model: Section
+        model: Project,
+        localStorage: new Store("reqs-projects-store")
     });
 });

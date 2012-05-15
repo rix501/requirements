@@ -10,6 +10,6 @@ function(RequirementsGroups) {
         initialize: function() {
             this.set({'reqs-groups': new RequirementsGroups()});
             this.get('reqs-groups').localStorage = new Store("reqs-" + this.get('title') + "-group-store");
-        },
+        }
     });
 });
