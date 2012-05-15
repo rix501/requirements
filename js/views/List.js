@@ -1,10 +1,10 @@
 define([
-    'jquery',
     'views/Group',
+    'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
     'order!vendor/backbone.min'
 ], 
-function($, GroupView) {  
+function(GroupView) {  
     return Backbone.View.extend({
         events: {
             "click .create-group": "create",

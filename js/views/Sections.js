@@ -1,11 +1,11 @@
 define([
-    'jquery',
     'models/Sections',
     'views/Section',
+    'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
     'order!vendor/backbone.min'
 ], 
-function($, Sections, SectionView) {  
+function(Sections, SectionView) {  
     return Backbone.View.extend({
         events: {
             'click .add-section' : 'edit',

@@ -1,10 +1,10 @@
 define([
-    'jquery',
     'views/Sections',
+    'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
     'order!vendor/backbone.min'
 ], 
-function($, SectionsView) {  
+function(SectionsView) {  
     return Backbone.View.extend({
         template: _.template($("#requirements-template").html()),
         className: 'row-fluid',

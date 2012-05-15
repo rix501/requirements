@@ -1,10 +1,10 @@
 define([
-    'jquery',
     'models/Requirement',
+    'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
     'order!vendor/backbone.min'
 ], 
-function($, Requirement) {  
+function(Requirement) {  
     return Backbone.View.extend({
         events: {
             "click .save" : "save",

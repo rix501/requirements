@@ -1,11 +1,11 @@
 define([
-    'jquery',
     'models/Requirements',
+    'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
     'order!vendor/backbone.min',
     'order!vendor/backbone-localstorage'
 ], 
-function($, Requirements) {  
+function(Requirements) {  
     return Backbone.Model.extend({
         initialize: function() {
             this.set({'reqs': new Requirements()});

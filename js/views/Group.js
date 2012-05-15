@@ -1,11 +1,11 @@
 define([
-    'jquery',
     'views/EditItem',
     'views/Item',
+    'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
     'order!vendor/backbone.min'
 ], 
-function($, EditItemView, ItemView) {  
+function(EditItemView, ItemView) {  
     return Backbone.View.extend({
         events: {
             "click h2" : "toggleList",

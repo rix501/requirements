@@ -1,8 +1,8 @@
 require([
-    "jquery",
-    "app"
+    'app',
+    'order!vendor/jquery.min'
 ], 
-function($, Requisita) {
+function(Requisita) {
     $(function() {
         // Kick off the application
         window.App = new Requisita();

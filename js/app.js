@@ -1,12 +1,12 @@
 define([
-    'jquery',
     'views/Page',
     'views/Projects',
     'views/Requirements',
+    'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
     'order!vendor/backbone.min'
 ], 
-function($, PageView, ProjectsView, RequirementsView) {  
+function(PageView, ProjectsView, RequirementsView) {  
     return Backbone.Router.extend({
         routes: {
             '': 'home',

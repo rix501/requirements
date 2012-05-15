@@ -1,11 +1,11 @@
 define([
-    'jquery',
     'models/RequirementsGroup',
+    'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
     'order!vendor/backbone.min',
     'order!vendor/backbone-localstorage'
 ], 
-function($, RequirementsGroup) {  
+function(RequirementsGroup) {  
     return Backbone.Collection.extend({
         model: RequirementsGroup,
         search : function(letters){

@@ -1,9 +1,9 @@
 define([
-    'jquery', 
+    'order!vendor/jquery.min', 
     'order!vendor/underscore.min', 
     'order!vendor/backbone.min'
 ], 
-function($) {  
+function() {  
     return Backbone.View.extend({
         template: _.template($("#page-template").html()),
         el: 'body',
