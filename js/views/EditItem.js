@@ -2,7 +2,7 @@ define([
     'models/Requirement',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
-    'order!vendor/backbone.min', 
+    'order!vendor/backbone',
     'order!vendor/bootstrap-transition', 
     'order!vendor/bootstrap-modal', 
     'order!vendor/markdown'

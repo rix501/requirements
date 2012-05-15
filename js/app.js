@@ -5,7 +5,7 @@ define([
     'views/Requirements',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
-    'order!vendor/backbone.min'
+    'order!vendor/backbone'
 ], 
 function(Projects, PageView, ProjectsView, RequirementsView) {  
     return Backbone.Router.extend({

@@ -2,14 +2,14 @@ define([
     'models/Requirements',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
-    'order!vendor/backbone.min',
-    'order!vendor/backbone-localstorage'
+    'order!vendor/backbone',
+    'order!vendor/backbone.localstorage.min'
 ], 
 function(Requirements) {  
     return Backbone.Model.extend({
         initialize: function() {
             this.set({'reqs': new Requirements()});
-            this.get('reqs').localStorage = new Store("reqs-" + this.get('title') + "-store");
+            this.get('reqs').localStorage = new Backbone.LocalStorage("reqs-" + this.get('title') + "-store");
         },
         search : function(letters){
             if(letters == "") return this.get('reqs');

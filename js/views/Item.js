@@ -2,7 +2,7 @@ define([
     'views/EditItem',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
-    'order!vendor/backbone.min'
+    'order!vendor/backbone'
 ], 
 function(EditItemView) {  
     return Backbone.View.extend({

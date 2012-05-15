@@ -1,7 +1,7 @@
 define([
     'order!vendor/jquery.min', 
     'order!vendor/underscore.min', 
-    'order!vendor/backbone.min'
+    'order!vendor/backbone'
 ], 
 function() {  
     return Backbone.View.extend({

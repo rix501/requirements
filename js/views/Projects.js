@@ -4,7 +4,7 @@ define([
     'views/EditProject',
     'order!vendor/jquery.min', 
     'order!vendor/underscore.min', 
-    'order!vendor/backbone.min'
+    'order!vendor/backbone'
 ], 
 function(Projects, ProjectView, EditProjectView) {  
     return Backbone.View.extend({
