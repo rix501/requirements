@@ -1,0 +1,15 @@
+define([
+    'jquery',
+    'models/RequirementsGroups',
+    'order!vendor/underscore.min', 
+    'order!vendor/backbone.min',
+    'order!vendor/backbone-localstorage'
+], 
+function($, RequirementsGroups) {  
+    return Backbone.Model.extend({
+        initialize: function() {
+            this.set({'reqs-groups': new RequirementsGroups()});
+            this.get('reqs-groups').localStorage = new Store("reqs-" + this.get('title') + "-group-store");
+        },
+    });
+});
