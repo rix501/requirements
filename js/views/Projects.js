@@ -20,6 +20,8 @@ function(Projects, ProjectView, EditProjectView) {
 
             this.collection.bind('reset', this.addAll, this);
             this.collection.bind('add', this.add, this);
+
+            this.collection.bind('all', this.render, this);
         },
         create: function(){
             var editProjectView = new EditProjectView({
@@ -41,8 +43,8 @@ function(Projects, ProjectView, EditProjectView) {
         },
         render: function() {
             this.$el.html(this.template());
-            
-            this.collection.fetch(); 
+
+            this.addAll();
 
             return this;
         }

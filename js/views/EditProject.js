@@ -34,14 +34,12 @@ function(Project) {
 
             if(this.model.collection){
                 this.model.save(attrs, {
-                    success: this.hide,
-                    wait: true
+                    success: this.hide
                 });
             }
             else if(this.collection){
                 this.collection.create(attrs, {
-                    success: this.hide,
-                    wait: true
+                    success: this.hide
                 });
             }
 
