@@ -2,7 +2,7 @@ define([
     'views/List',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
-    'order!vendor/backbone'
+    'order!vendor/backbone.min'
 ], 
 function(ListView) {  
     return Backbone.View.extend({

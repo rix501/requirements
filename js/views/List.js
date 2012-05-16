@@ -2,7 +2,7 @@ define([
     'views/Group',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
-    'order!vendor/backbone'
+    'order!vendor/backbone.min'
 ], 
 function(GroupView) {  
     return Backbone.View.extend({

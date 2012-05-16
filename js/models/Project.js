@@ -2,7 +2,7 @@ define([
     'models/Sections',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
-    'order!vendor/backbone',
+    'order!vendor/backbone.min',
     'order!vendor/backbone.localstorage.min'
 ], 
 function(Sections) {  
