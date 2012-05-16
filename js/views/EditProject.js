@@ -2,7 +2,7 @@ define([
     'models/Project',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
-    'order!vendor/backbone.min', 
+    'order!vendor/backbone.min' 
     'order!vendor/bootstrap-transition', 
     'order!vendor/bootstrap-modal'
 ], 
@@ -25,7 +25,7 @@ function(Project) {
             }
         },
         save: function(){
-            if (!this.$('.edit-title').val()) return;
+            if (!this.$('.edit-title').val()) return false;
 
             var attrs = {
                 projectId: this.model.get('projectId'),
@@ -34,12 +34,14 @@ function(Project) {
 
             if(this.model.collection){
                 this.model.save(attrs, {
-                    success: this.hide
+                    success: this.hide,
+                    wait: true
                 });
             }
             else if(this.collection){
                 this.collection.create(attrs, {
-                    success: this.hide
+                    success: this.hide,
+                    wait: true
                 });
             }
 
