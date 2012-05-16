@@ -3,7 +3,6 @@ define([
     'views/Page',
     'views/Projects',
     'views/Requirements',
-    '/socket.io/socket.io.js',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
     'order!vendor/backbone.min'
@@ -20,8 +19,6 @@ function(Projects, PageView, ProjectsView, RequirementsView) {
 
             this.currentView = null;
             window.Projects = null;
-
-            this.socket = io.connect('http://localhost');
         },
         isProjectsLoaded: function(cb){
             if(_.isNull(window.Projects)){
