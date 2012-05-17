@@ -3,7 +3,7 @@ define([
     'views/Section',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min', 
-    'order!vendor/backbone'
+    'order!vendor/backbone.min'
 ], 
 function(Sections, SectionView) {  
     return Backbone.View.extend({
