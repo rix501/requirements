@@ -23,7 +23,8 @@ function(Requirement) {
 
             if(!_.isUndefined(this.collection) && _.isUndefined(this.model)){
                 this.model = new Requirement({
-                    reqId: this.groupId + '.' + (this.collection.length + 1)
+                    reqId: '0',
+                    groupId: this.groupId
                 });
             }
         },
@@ -35,6 +36,7 @@ function(Requirement) {
                 title: this.$('.edit-title').val(),
                 comments: this.$('.edit-comments').val(),
                 commentsMD: markdown.toHTML( this.$('.edit-comments').val() ),
+                groupId: this.groupId
             }
 
             if(this.model.collection){

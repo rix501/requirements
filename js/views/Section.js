@@ -24,7 +24,7 @@ function(ListView) {
         add: function(){
             var listView = new ListView({
                 collection: this.collection,
-                sectionId: this.sectionId
+                sectionId: this.model.id
             });
 
             //Its out of scope

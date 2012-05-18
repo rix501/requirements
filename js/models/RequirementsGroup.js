@@ -10,7 +10,6 @@ function(Requirements, db) {
     return Backbone.Model.extend({
         initialize: function() {
             this.set({'reqs': new Requirements()});
-            //this.get('reqs').localStorage = new Backbone.LocalStorage("reqs-" + this.get('title') + "-store");
             this.get('reqs').storeName = 'reqs-store';
             this.get('reqs').database = db;
         },

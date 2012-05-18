@@ -50,7 +50,8 @@ function(Sections, SectionView) {
             if(title != ''){
                 this.collection.create({
                     title: title,
-                    sectionId: this.collection.length + 1
+                    sectionId: this.collection.length + 1,
+                    projectId: this.projectId
                 });
             }
         },
@@ -66,7 +67,9 @@ function(Sections, SectionView) {
         render: function() {
             this.$el.html(this.template());
             
-            this.collection.fetch(); 
+            this.collection.fetch({
+                conditions: { projectId: this.projectId }
+            }); 
 
             return this;
         }

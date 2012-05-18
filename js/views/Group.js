@@ -25,7 +25,9 @@ function(EditItemView, ItemView) {
             this.title = this.model.get('title');
             this.groupId = this.model.get('groupId');
 
-            this.collection.fetch();
+            this.collection.fetch({
+                conditions: { groupId: this.groupId }
+            });
         },
         add: function(req){
             var view = new ItemView({model: req});
@@ -37,7 +39,7 @@ function(EditItemView, ItemView) {
         create: function(){
             var editItemView = new EditItemView({
                 collection: this.collection,
-                groupId: this.groupId
+                groupId: this.model.id
             });
             editItemView.render();
 

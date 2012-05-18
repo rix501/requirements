@@ -28,12 +28,10 @@
      }
 
      window.indexedDB = indexedDB;
-     window.IDBCursor = window.IDBCursor || window.webkitIDBCursor ||  window.mozIDBCursor ||  window.msIDBCursor ;
-    
+     window.IDBCursor = window.IDBCursor || window.webkitIDBCursor ||  window.mozIDBCursor ||  window.msIDBCursor ; 
 
     // Driver object
-    // That's the interesting part.
-    // There is a driver for each schema provided. The schema is a te combination of name (for the database), a version as well as migrations to reach that 
+    // There is a driver for each schema provided. The schema is a combination of name (for the database), a version as well as migrations to reach that 
     // version of the database.
     function Driver(schema, ready) {
         this.schema         = schema;
@@ -82,8 +80,6 @@
             };
         }.bind(this);
 
-
-
         this.dbRequest.onerror = function (e) {
             // Failed to open the database
             this.error = "Couldn't not connect to the database"
@@ -94,8 +90,6 @@
             this.error = "Connection to the database aborted"
         }.bind(this);
 
-
-
         this.dbRequest.onupgradeneeded = function(iDBVersionChangeEvent){
             this.db =iDBVersionChangeEvent.target.transaction.db;
 
@@ -103,7 +97,6 @@
 
             debugLog("onupgradeneeded = " + iDBVersionChangeEvent.oldVersion + " => " + iDBVersionChangeEvent.newVersion);
             this.launchMigrationPath(iDBVersionChangeEvent.oldVersion);
-
 
         }.bind(this);
     }
@@ -260,14 +253,17 @@
 
             if (!json.id) json.id = guid();
 
-            var writeRequest = store.put(JSON.stringify(json), json.id);
+            json = JSON.parse(JSON.stringify(json));
+
+            var writeRequest = store.add(json);
 
             writeRequest.onerror = function (e) {
                 options.error(e);
             };
             writeRequest.onsuccess = function (e) {
-                options.success(json);
-            };
+                object.set({id: json.id});
+                options.success(object);
+            }.bind(this);
         },
         
         // Writes the json to the storeName in db. It is an update operation, which means it will overwrite the value if the key already exist
@@ -280,14 +276,15 @@
 
             if (!json.id) json.id = guid();
 
-            var writeRequest = store.put(json, json.id);
+            var writeRequest = store.put(json);
 
             writeRequest.onerror = function (e) {
                 options.error(e);
             };
             writeRequest.onsuccess = function (e) {
-                options.success(json);
-            };
+                object.set({id: json.id});
+                options.success(object);
+            }.bind(this);
         },
 
         // Reads from storeName in db with json.id if it's there of with any json.xxxx as long as xxx is an index in storeName 
@@ -297,7 +294,6 @@
 
             var store = readTransaction.objectStore(storeName);
             var json = object.toJSON();
-
 
             var getRequest = null;
             if (json.id) {
@@ -314,7 +310,7 @@
             if (getRequest) {
                 getRequest.onsuccess = function (event) {
                     if (event.target.result) {
-                        options.success(JSON.parse(event.target.result));
+                        options.success(event.target.result);
                     } else {
                         options.error("Not Found");
                     }
@@ -447,7 +443,7 @@
                                 };
 
                             } else {
-                                elements.push(JSON.parse(cursor.value));
+                                elements.push(cursor.value);
                             }
                             processed++;
                             cursor.continue();
@@ -457,9 +453,7 @@
             }
         },
         close :function(){
-            if(this.db){
-                this.db.close()
-;            }
+            if(this.db) this.db.close();
         }
     };
 
@@ -531,8 +525,8 @@
 
         if (!Databases[schema.id]) {
               Databases[schema.id] = new ExecutionQueue(schema,next);
-            }else
-        {
+        } 
+        else {
             next();
         }
 

@@ -1,23 +1,27 @@
-define([
-    'order!vendor/jquery.min',
-    'order!vendor/underscore.min', 
-    'order!vendor/backbone.min',
-    'order!vendor/backbone.indexeddb'
-], 
-function() {  
-    return {  
-        id: 'requisita-db',
-        description: 'Offline db for Requisita',
-        migrations : [
-            {
-                version: '2.3',
-                migrate: function (transaction, next) {
-                    //transaction.db.createObjectStore('reqs-sections-store');
-                    //transaction.db.createObjectStore('reqs-store');
-                    //transaction.db.createObjectStore('reqs-group-store');
-                    next();
-                }
+define({  
+    id: 'requisita-db',
+    description: 'Offline db for Requisita',
+    migrations : [
+        {
+            version: 10,
+            migrate: function (transaction, next) {
+                transaction.db.deleteObjectStore('reqs-projects-store');
+                var projects = transaction.db.createObjectStore('reqs-projects-store', { keyPath: 'id' });
+
+                transaction.db.deleteObjectStore('reqs-sections-store');
+                var sections = transaction.db.createObjectStore('reqs-sections-store', { keyPath: 'id' });
+                sections.createIndex('projectId', 'projectId', { unique: false });
+
+                transaction.db.deleteObjectStore('reqs-group-store');
+                var groups = transaction.db.createObjectStore('reqs-group-store', { keyPath: 'id' });
+                groups.createIndex('sectionId', 'sectionId', { unique: false });
+
+                transaction.db.deleteObjectStore('reqs-store');
+                var reqs = transaction.db.createObjectStore('reqs-store', { keyPath: 'id' });
+                reqs.createIndex('groupId', 'groupId', { unique: false });
+
+                next();
             }
-        ]
-    }
+        }
+    ]
 });

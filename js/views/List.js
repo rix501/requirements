@@ -34,7 +34,7 @@ function(GroupView) {
        
             this.collection.create({
                 title: this.input.val(),
-                groupId: this.sectionId + '.' + (this.collection.length + 1)
+                sectionId: this.sectionId
             });
 
             this.input.val('');
@@ -58,7 +58,9 @@ function(GroupView) {
             
             this.input = this.$el.find(".group-title");
 
-            this.collection.fetch(); 
+            this.collection.fetch({
+                conditions: { sectionId: this.sectionId }
+            }); 
 
             return this;
         }
