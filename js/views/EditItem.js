@@ -19,7 +19,7 @@ function(Requirement) {
         initialize: function() {
             _.bindAll(this, 'render', 'save', 'hide', 'remove');
 
-            this.groupId = this.options.groupId;
+            this.groupId = (this.options.groupId) ? this.options.groupId : this.model.get('groupId');
 
             if(!_.isUndefined(this.collection) && _.isUndefined(this.model)){
                 this.model = new Requirement({

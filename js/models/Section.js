@@ -18,7 +18,7 @@ function(RequirementsGroups, db) {
 
             _.each(json, function(attr, key){
                 //Collection has models!
-                if(attr.models){
+                if(attr && attr.models){
                     json[key] = [];
                 }
             });
