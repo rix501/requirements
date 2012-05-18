@@ -16,6 +16,8 @@ function(RequirementsGroup, db) {
             return _(this.filter(function(reqsGroup) {
                 return pattern.test(reqsGroup.get("title")) ||  reqsGroup.search(letters).size() > 0 ;
             }));
-        }
+        },
+        storeName: 'reqs-group-store',
+        database: db
     });
 });

@@ -8,6 +8,8 @@ define([
 ], 
 function(Requirement, db) {  
     return Backbone.Collection.extend({
-        model: Requirement
+        model: Requirement,
+        storeName: 'reqs-store',
+        database: db
     });
 });

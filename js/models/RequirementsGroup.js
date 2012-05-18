@@ -10,8 +10,6 @@ function(Requirements, db) {
     return Backbone.Model.extend({
         initialize: function() {
             this.set({'reqs': new Requirements()});
-            this.get('reqs').storeName = 'reqs-store';
-            this.get('reqs').database = db;
         },
         search : function(letters){
             if(letters == "") return this.get('reqs');
@@ -22,6 +20,18 @@ function(Requirements, db) {
             }));
         },
         storeName: 'reqs-group-store',
-        database: db
+        database: db,
+        toJSON: function(options){
+            var json = _.clone(this.attributes);
+
+            _.each(json, function(attr, key){
+                //Collection has models!
+                if(attr.models){
+                    json[key] = [];
+                }
+            });
+
+            return json;
+        }
     });
 });

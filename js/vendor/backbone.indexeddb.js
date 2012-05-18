@@ -14,7 +14,6 @@
         Backbone = require('backbone');
     }
     
-    
      // Naming is a mess!
      var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB ;
      var IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction; // No prefix in moz
@@ -169,7 +168,7 @@
                                     debugLog("Migrated to " + migration.version);
 
                                     //last modification occurred, need finish
-                                    if(migrations.length ==0) {
+                                    if(migrations.length == 0) {
                                         /*if(this.supportOnUpgradeNeeded){
                                             debugLog("Done migrating");
                                             // No more migration
@@ -252,8 +251,6 @@
             var json = object.toJSON();
 
             if (!json.id) json.id = guid();
-
-            json = JSON.parse(JSON.stringify(json));
 
             var writeRequest = store.add(json);
 
@@ -529,8 +526,6 @@
         else {
             next();
         }
-
-
     };
 
     if(typeof exports == 'undefined'){

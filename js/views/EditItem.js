@@ -29,7 +29,7 @@ function(Requirement) {
             }
         },
         save: function(){
-            if (!this.$('.edit-title').val()) return;
+            if (!this.$('.edit-title').val()) return false;
 
             var attrs = {
                 reqId: this.model.get('reqId'),

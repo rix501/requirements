@@ -13,6 +13,18 @@ function(db) {
             "commentsMD": ''
         },
         storeName: 'reqs-store',
-        database: db
+        database: db,
+        toJSON: function(options){
+            var json = _.clone(this.attributes);
+
+            _.each(json, function(attr, key){
+                //Collection has models!
+                if(attr.models){
+                    json[key] = [];
+                }
+            });
+
+            return json;
+        }
     });
 });

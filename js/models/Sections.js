@@ -8,6 +8,8 @@ define([
 ], 
 function(Section, db) {  
     return Backbone.Collection.extend({
-        model: Section
+        model: Section,
+        storeName: 'reqs-sections-store',
+        database: db
     });
 });

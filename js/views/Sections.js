@@ -37,7 +37,7 @@ function(Sections, SectionView) {
         edit: function(event){
             if(this.$('.section-title').length > 0) return false;
             
-            var input = '<li><input class="section-title span3" name="section-title" type="text"></li>';
+            var input = '<li><input class="section-title row-fluid" name="section-title" type="text"></li>';
 
             this.$('.divider').before(input);
             return false;
