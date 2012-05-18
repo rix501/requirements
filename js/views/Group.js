@@ -23,7 +23,7 @@ function(EditItemView, ItemView) {
             this.collection.bind('all', this.render, this);
 
             this.title = this.model.get('title');
-            this.groupId = this.model.get('groupId');
+            this.groupId = this.model.id;
 
             this.collection.fetch({
                 conditions: { groupId: this.groupId }
