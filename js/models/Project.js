@@ -12,6 +12,9 @@ function(Sections, db) {
             "title": ''
         },
         initialize: function() {
+            this.on('change', this.addSections, this);
+        },
+        addSections: function(model, options){
             this.set({
                 'sections': new Sections()
             });

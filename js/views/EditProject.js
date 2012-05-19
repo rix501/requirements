@@ -29,8 +29,8 @@ function(Project) {
 
             var attrs = {
                 projectId: this.model.get('projectId'),
-                title: this.$('.edit-title').val(),
-            }
+                title: this.$('.edit-title').val()
+            };
 
             if(this.model.collection){
                 this.model.save(attrs, {
