@@ -50,7 +50,7 @@ function(Sections, SectionView) {
             if(title != ''){
                 this.collection.create({
                     title: title,
-                    sectionId: this.collection.length + 1,
+                    position: this.collection.length + 1,
                     projectId: this.projectId
                 });
             }

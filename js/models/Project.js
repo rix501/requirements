@@ -12,7 +12,9 @@ function(Sections, db) {
             "title": ''
         },
         initialize: function() {
-            this.set({'sections': new Sections()});
+            this.set({
+                'sections': new Sections()
+            });
         },
         storeName: 'reqs-projects-store',
         database: db,

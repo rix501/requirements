@@ -20,7 +20,7 @@ define({
             }
         },
         {
-            version: 11,
+            version: 15,
             migrate: function (transaction, next) {
                 transaction.db.deleteObjectStore('reqs-projects-store');
                 var projects = transaction.db.createObjectStore('reqs-projects-store', { keyPath: 'id' });

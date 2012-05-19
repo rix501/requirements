@@ -19,10 +19,12 @@ function(GroupView) {
             this.collection.bind('add', this.add, this);
 
             this.sectionId = this.options.sectionId;
+            this.section = this.options.section;
         },
         add: function(reqsGroup){
             var listView = new GroupView({
-                model: reqsGroup
+                model: reqsGroup,
+                section: this.section
             });
             this.$('#groups').append(listView.render().el);
         },
@@ -34,7 +36,8 @@ function(GroupView) {
        
             this.collection.create({
                 title: this.input.val(),
-                sectionId: this.sectionId
+                sectionId: this.sectionId,
+                position: this.collection.length + 1
             });
 
             this.input.val('');

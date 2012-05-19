@@ -20,7 +20,7 @@ function(Project) {
 
             if(!_.isUndefined(this.collection) && _.isUndefined(this.model)){
                 this.model = new Project({
-                    projectId: (this.collection.length + 1)
+                    position: (this.collection.length + 1)
                 });
             }
         },

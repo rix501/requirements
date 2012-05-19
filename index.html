@@ -38,7 +38,7 @@
     <script type="text/template" id="edit-project-template">
         <div class="modal-header">
             <a class="close" data-dismiss="modal">×</a>
-            <h3>Edit Project : <%= projectId %></h3>
+            <h3>Edit Project</h3>
         </div>
         <div class="modal-body">
             <label for="edit-title">Title:</label>
@@ -50,7 +50,10 @@
         </div>
     </script>
     <script type="text/template" id="requirements-template">
-        <div class="page-header"><h1>Requirements</h1></div>
+        <div class="page-header">
+            <h1>Requirements for <%=  window.Projects.get(projectId).get('title') %></h1> 
+            <button class="btn print">Print</button></div>
+        </div>
         <div class="span3 well sidebar-nav sections"></div>
         <div class="list span8"></div>
     </script>
@@ -84,19 +87,24 @@
         </div>
     </script>
     <script type="text/template" id="item-template">
+
         <div class="row-fluid">
-            <div class="span4">
-                <h3> <%= reqId %> : <%= title %> </h3>
+            <div class="span3 req-title">
+                <h3> <%= positionString %> : <%= title %> </h3>
             </div>
-            <div class="span8">
+            <div class="span5 req-comments">
                 <span class="md-comments"><%= commentsMD %></span>
+            </div>
+            <div class="span4">
+                <button class="btn up">Up</button>
+                <button class="btn down">Down</button>
             </div>
         </div>
     </script>
     <script type="text/template" id="edit-item-template">
         <div class="modal-header">
             <a class="close" data-dismiss="modal">×</a>
-            <h3>Edit Requirement : <%= reqId %></h3>
+            <h3>Edit Requirement : <%= positionString %></h3>
         </div>
         <div class="modal-body">
             <label for="edit-title">Title:</label>

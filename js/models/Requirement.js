@@ -10,7 +10,11 @@ function(db) {
         defaults: {
             "title": '',
             "comments": '',
-            "commentsMD": ''
+            "commentsMD": '',
+            "position": 0
+        },
+        initialize: function(){
+            //this.set({ position: (this.collection) ? this.collection.length + 1 : 1 });
         },
         storeName: 'reqs-store',
         database: db,

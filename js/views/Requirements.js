@@ -14,7 +14,7 @@ function(SectionsView) {
             this.projectId = this.options.projectId;
         },
         render: function() {
-            this.$el.html(this.template());
+            this.$el.html(this.template({ projectId: this.projectId }));
             
             var sectionsView = new SectionsView({
                 projectId: this.projectId

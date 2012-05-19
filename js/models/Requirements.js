@@ -10,6 +10,9 @@ function(Requirement, db) {
     return Backbone.Collection.extend({
         model: Requirement,
         storeName: 'reqs-store',
-        database: db
+        database: db,
+        comparator: function(model){
+            return model.get('position');
+        }
     });
 });

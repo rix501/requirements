@@ -23,30 +23,34 @@ function(Requirement) {
 
             if(!_.isUndefined(this.collection) && _.isUndefined(this.model)){
                 this.model = new Requirement({
-                    reqId: '0',
-                    groupId: this.groupId
+                    position: this.collection.length + 1
                 });
             }
+
+            this.section = this.options.section;
+            this.group = this.options.group;
         },
         save: function(){
             if (!this.$('.edit-title').val()) return false;
 
             var attrs = {
-                reqId: this.model.get('reqId'),
                 title: this.$('.edit-title').val(),
                 comments: this.$('.edit-comments').val(),
                 commentsMD: markdown.toHTML( this.$('.edit-comments').val() ),
-                groupId: this.groupId
-            }
+                groupId: this.groupId,
+                position: (this.collection) ? this.collection.length + 1 : (this.model.collection) ? this.model.get('position') : 1
+            };
 
             if(this.model.collection){
                 this.model.save(attrs, {
-                    success: this.hide
+                    success: this.hide,
+                    wait: true
                 });
             }
             else if(this.collection){
                 this.collection.create(attrs, {
-                    success: this.hide
+                    success: this.hide,
+                    wait: true
                 });
             }
 
@@ -59,7 +63,10 @@ function(Requirement) {
             this.$el.remove();
         },
         render: function() {
-            this.$el.html(this.template(this.model.toJSON()));
+            var json = this.model.toJSON();
+            json.positionString = this.section.get('position') + '.' + this.group.get('position') + '.' + this.model.get('position');
+
+            this.$el.html(this.template(json));
             this.$el.modal('show');
             return this;
         }

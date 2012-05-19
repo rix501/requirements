@@ -258,8 +258,7 @@
                 options.error(e);
             };
             writeRequest.onsuccess = function (e) {
-                object.set({id: json.id});
-                options.success(object);
+               options.success(json);
             }.bind(this);
         },
         
@@ -279,8 +278,7 @@
                 options.error(e);
             };
             writeRequest.onsuccess = function (e) {
-                object.set({id: json.id});
-                options.success(object);
+                options.success(json);
             }.bind(this);
         },
 

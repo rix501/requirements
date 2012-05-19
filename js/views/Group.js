@@ -25,12 +25,18 @@ function(EditItemView, ItemView) {
             this.title = this.model.get('title');
             this.groupId = this.model.id;
 
+            this.section = this.options.section;
+
             this.collection.fetch({
                 conditions: { groupId: this.groupId }
             });
         },
         add: function(req){
-            var view = new ItemView({model: req});
+            var view = new ItemView({
+                model: req,
+                section: this.section,
+                group: this.model
+            });
             this.$("ul.reqs").append(view.render().el);
         },
         addAll: function(){
@@ -39,7 +45,9 @@ function(EditItemView, ItemView) {
         create: function(){
             var editItemView = new EditItemView({
                 collection: this.collection,
-                groupId: this.model.id
+                groupId: this.model.id,
+                section: this.section,
+                group: this.model
             });
             editItemView.render();
 

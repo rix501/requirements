@@ -9,7 +9,9 @@ define([
 function(RequirementsGroups, db) {  
     return Backbone.Model.extend({
         initialize: function() {
-            this.set({'reqs-groups': new RequirementsGroups()});
+            this.set({
+                'reqs-groups': new RequirementsGroups()
+            });
         },
         storeName: 'reqs-sections-store',
         database: db,

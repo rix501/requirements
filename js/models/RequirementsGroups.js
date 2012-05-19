@@ -18,6 +18,9 @@ function(RequirementsGroup, db) {
             }));
         },
         storeName: 'reqs-group-store',
-        database: db
+        database: db,
+        comparator: function(model){
+            return model.get('position');
+        }
     });
 });

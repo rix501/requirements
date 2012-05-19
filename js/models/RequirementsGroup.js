@@ -9,7 +9,9 @@ define([
 function(Requirements, db) {  
     return Backbone.Model.extend({
         initialize: function() {
-            this.set({'reqs': new Requirements()});
+            this.set({
+                'reqs': new Requirements()
+            });
         },
         search : function(letters){
             if(letters == "") return this.get('reqs');
