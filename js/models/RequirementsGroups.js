@@ -14,7 +14,7 @@ function(RequirementsGroup, db) {
      
             var pattern = new RegExp(letters,"gi");
             return _(this.filter(function(reqsGroup) {
-                return pattern.test(reqsGroup.get("title")) ||  reqsGroup.search(letters).size() > 0 ;
+                return (pattern.test(reqsGroup.get("title")) ||  reqsGroup.search(letters).size() > 0) ;
             }));
         },
         storeName: 'reqs-group-store',
