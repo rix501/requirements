@@ -52,7 +52,7 @@
     <script type="text/template" id="requirements-template">
         <div class="page-header">
             <h1>Requirements for <%=  window.Projects.get(projectId).get('title') %></h1> 
-            <button class="btn print">Print</button></div>
+            <a href="#/<%= projectId %>/print/requirements" class="btn print">Print</a></div>
         </div>
         <div class="span3 well sidebar-nav sections"></div>
         <div class="list span8"></div>
@@ -117,6 +117,35 @@
             <a href="#" class="btn btn-primary save">Save changes</a>
         </div>
     </script>
+    <script type="text/template" id="print-requirements-template">
+        <% _.each(collection, function(section){ %>
+
+        <h2><%= section.number %>. <%= section.title %></h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Número</th>
+                    <th>Grupo</th>
+                    <th>Requerimiento</th>
+                    <th>Comentarios</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% _.each(section.groups, function(req){ %>
+                    <tr>
+                        <td><%= req.number %></th>
+                        <td><%= req.group %></th>
+                        <td><%= req.requirement %></th>
+                        <td><%= req.comments %></th>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+
+
+        <% }); %>
+    </script>
+
     <script data-main="js/main" src="js/vendor/require.js"></script>
 </head>
 <body>

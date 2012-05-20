@@ -20,7 +20,7 @@ define({
             }
         },
         {
-            version: 15,
+            version: 16,
             migrate: function (transaction, next) {
                 transaction.db.deleteObjectStore('reqs-projects-store');
                 var projects = transaction.db.createObjectStore('reqs-projects-store', { keyPath: 'id' });
@@ -32,10 +32,13 @@ define({
                 transaction.db.deleteObjectStore('reqs-group-store');
                 var groups = transaction.db.createObjectStore('reqs-group-store', { keyPath: 'id' });
                 groups.createIndex('sectionId', 'sectionId', { unique: false });
+                groups.createIndex('projectId', 'projectId', { unique: false });
 
                 transaction.db.deleteObjectStore('reqs-store');
                 var reqs = transaction.db.createObjectStore('reqs-store', { keyPath: 'id' });
                 reqs.createIndex('groupId', 'groupId', { unique: false });
+                reqs.createIndex('sectionId', 'sectionId', { unique: false });
+                reqs.createIndex('projectId', 'projectId', { unique: false });
 
                 next();
             }

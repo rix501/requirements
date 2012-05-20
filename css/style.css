@@ -6,7 +6,8 @@ body {
     display: inline;
 }
 
-.page-header button {
+.page-header button,
+.page-header a {
     float: right;
 }
 

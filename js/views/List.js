@@ -37,6 +37,7 @@ function(GroupView) {
             this.collection.create({
                 title: this.input.val(),
                 sectionId: this.sectionId,
+                projectId: this.section.get('projectId'),
                 position: this.collection.length + 1
             });
 

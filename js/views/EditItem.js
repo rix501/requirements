@@ -38,6 +38,8 @@ function(Requirement) {
                 comments: this.$('.edit-comments').val(),
                 commentsMD: markdown.toHTML( this.$('.edit-comments').val() ),
                 groupId: this.groupId,
+                sectionId: this.section.id,
+                projectId: this.section.get('projectId'),
                 position: (this.collection) ? this.collection.length + 1 : (this.model.collection) ? this.model.get('position') : 1
             };
 
