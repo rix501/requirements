@@ -61,11 +61,9 @@ function(Requirements, RequirementsGroups, Sections) {
                     .value();
 
                     return reqs;
-
                 },this))
                 .flatten()
                 .value();
-
 
                 this.collection = this.collection.concat({
                     number: section.get('position'),
