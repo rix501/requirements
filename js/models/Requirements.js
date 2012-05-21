@@ -15,7 +15,7 @@ function(Requirement, db) {
         storeName: 'reqs-store',
         database: db,
         update: function(model){
-            model.save();
+            //model.save();
         },
         comparator: function(model){
             return model.get('position');

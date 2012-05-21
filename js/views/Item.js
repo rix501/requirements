@@ -9,8 +9,6 @@ function(EditItemView) {
         events: {
             "click .req-title" : "edit",
             "click .req-comments" : "edit",
-            "click .up" : "up",
-            "click .down" : "down",
             "sortstop": "see",
             "sortreceive": "saw"
         },
@@ -18,7 +16,7 @@ function(EditItemView) {
         tagName: 'li',
         className: 'req-item',
         initialize: function() {
-            _.bindAll(this, 'render', 'edit', 'up', 'down', 'reorder', 'see', 'saw');
+            _.bindAll(this, 'render', 'edit', 'reorder', 'see', 'saw', 'sup');
 
             this.model.bind('change', this.render, this);
 
@@ -34,24 +32,43 @@ function(EditItemView) {
             editItemView.render();
         },
         see: function(event, ui){
-            console.log(event, ui);
+            //Let's get new position
+            var newPos = ui.item.parent().children('li').index(ui.item[0]) + 1;
+            var oldPos = this.model.get('position');
+
+            this.sup(oldPos, newPos);
         },
         saw: function(event, ui, model){
+            this.model.collection.remove(this.model);
+            model.get('reqs').add(this.model);
             this.model.set({groupId: model.id});
             this.group = model;
             this.render();
         },
-        up: function(event){
-            this.reorder(1);
+        sup: function(oldPosition, newPosition){
+            var id = this.model.id;
 
-            return false;
-        },
-        down: function(event){
-            this.reorder(-1);
+            this.model.collection.chain()
+            .select(function(model){
+                return model.id != id;
+            })
+            .each(function(model, index, list){
+                model.set({ position: index + 1});
+            });
 
-            return false;
+            this.model.collection.chain()
+            .select(function(model){
+                return model.id != id && model.get('position') >= newPosition;
+            })
+            .each(function(model, index, list){
+                model.set({ position: model.get('position') + 1});
+            });
+
+            this.model.set({ position: newPosition});
+
+            this.model.collection.sort();
         },
-        reorder: function(direction){
+        reorder: function(newPosition){
             // + 1 goes up, - 1 goes down
 
             if( (this.model.get('position') - direction) > 0 && (this.model.get('position') - direction) <=  this.model.collection.length){
