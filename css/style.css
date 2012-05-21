@@ -2,6 +2,16 @@ body {
     padding: 50px;
 }
 
+.sortable-dragging {
+    border: 1px solid red;
+    background: none;
+}
+
+.sortable-placeholder {
+    border: 1px dashed blue;
+    background: none;
+}
+
 .page-header h1 {
     display: inline;
 }

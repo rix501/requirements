@@ -2,6 +2,7 @@ define([
     'views/EditItem',
     'views/Item',
     'order!vendor/jquery.min',
+    'order!vendor/jquery.ui.min',
     'order!vendor/underscore.min', 
     'order!vendor/backbone.min'
 ], 
@@ -15,7 +16,7 @@ function(EditItemView, ItemView) {
         template: _.template($("#group-template").html()),
         className: "reqgroup",
         initialize: function() {
-            _.bindAll(this, 'render', 'add', 'addAll', 'create');
+            _.bindAll(this, 'render', 'add', 'addAll', 'create', 'received', 'stop');
 
             this.collection = this.model.get('reqs');
             this.collection.bind('add', this.add, this);
@@ -53,6 +54,12 @@ function(EditItemView, ItemView) {
 
             return;
         },
+        stop: function(event, ui){
+            ui.item.trigger('sortstop', ui);
+        },
+        received: function(event, ui){
+            ui.item.trigger('sortreceive', [ ui, this.model ]);
+        },
         search: function(event){
             var letters = this.$(".search").val();
             this.renderList(this.model.search(letters));
@@ -75,6 +82,15 @@ function(EditItemView, ItemView) {
                 title: this.title,
                 count: this.collection.length
             }));
+
+            this.$("ul.reqs")
+                .sortable({
+                    connectWith: 'ul.reqs',
+                    receive: this.received,
+                    stop: this.stop
+                })
+                .disableSelection();
+
             this.addAll();
 
             return this;

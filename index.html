@@ -87,10 +87,12 @@
         </div>
     </script>
     <script type="text/template" id="item-template">
-
         <div class="row-fluid">
-            <div class="span3 req-title">
-                <h3> <%= positionString %> : <%= title %> </h3>
+            <div class="span1 req-position">
+                <h3> <%= positionString %> :</h3>
+            </div>
+            <div class="span2 req-title">
+                <%= title %>
             </div>
             <div class="span5 req-comments">
                 <span class="md-comments"><%= commentsMD %></span>

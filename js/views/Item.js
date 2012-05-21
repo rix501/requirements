@@ -10,13 +10,15 @@ function(EditItemView) {
             "click .req-title" : "edit",
             "click .req-comments" : "edit",
             "click .up" : "up",
-            "click .down" : "down"
+            "click .down" : "down",
+            "sortstop": "see",
+            "sortreceive": "saw"
         },
         template: _.template($("#item-template").html()),
         tagName: 'li',
         className: 'req-item',
         initialize: function() {
-            _.bindAll(this, 'render', 'edit', 'up', 'down', 'reorder');
+            _.bindAll(this, 'render', 'edit', 'up', 'down', 'reorder', 'see', 'saw');
 
             this.model.bind('change', this.render, this);
 
@@ -30,6 +32,14 @@ function(EditItemView) {
                 group: this.model
             });
             editItemView.render();
+        },
+        see: function(event, ui){
+            console.log(event, ui);
+        },
+        saw: function(event, ui, model){
+            this.model.set({groupId: model.id});
+            this.group = model;
+            this.render();
         },
         up: function(event){
             this.reorder(1);
