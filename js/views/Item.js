@@ -44,6 +44,8 @@ function(EditItemView) {
             this.model.set({groupId: model.id});
             this.group = model;
             this.render();
+
+            this.see(event, ui);
         },
         sup: function(oldPosition, newPosition){
             var id = this.model.id;
