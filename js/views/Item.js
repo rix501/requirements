@@ -16,7 +16,7 @@ function(EditItemView) {
         tagName: 'li',
         className: 'req-item',
         initialize: function() {
-            _.bindAll(this, 'render', 'edit', 'reorder', 'see', 'saw', 'sup');
+            _.bindAll(this, 'render', 'edit', 'reorder', 'sort', 'changeGroup');
 
             this.model.bind('change', this.render, this);
 
@@ -31,14 +31,14 @@ function(EditItemView) {
             });
             editItemView.render();
         },
-        see: function(event, ui){
+        sort: function(event, ui){
             //Let's get new position
             var newPos = ui.item.parent().children('li').index(ui.item[0]) + 1;
             var oldPos = this.model.get('position');
 
             this.sup(oldPos, newPos);
         },
-        saw: function(event, ui, model){
+        changeGroup: function(event, ui, model){
             this.model.collection.remove(this.model);
             model.get('reqs').add(this.model);
             this.model.set({groupId: model.id});
@@ -47,15 +47,17 @@ function(EditItemView) {
 
             this.see(event, ui);
         },
-        sup: function(oldPosition, newPosition){
+        reorder: function(oldPosition, newPosition){
             var id = this.model.id;
+
+            var silent = {silent:true};
 
             this.model.collection.chain()
             .select(function(model){
                 return model.id != id;
             })
             .each(function(model, index, list){
-                model.set({ position: index + 1});
+                model.set({ position: index + 1}, silent);
             });
 
             this.model.collection.chain()
@@ -63,27 +65,16 @@ function(EditItemView) {
                 return model.id != id && model.get('position') >= newPosition;
             })
             .each(function(model, index, list){
-                model.set({ position: model.get('position') + 1});
+                model.set({ position: model.get('position') + 1}, silent);
             });
 
-            this.model.set({ position: newPosition});
+            this.model.set({ position: newPosition}, silent);
+
+            this.model.collection.each(function(model){
+                model.trigger('change:position', model);
+            });
 
             this.model.collection.sort();
-        },
-        reorder: function(newPosition){
-            // + 1 goes up, - 1 goes down
-
-            if( (this.model.get('position') - direction) > 0 && (this.model.get('position') - direction) <=  this.model.collection.length){
-                this.model.set({ position: this.model.get('position') - direction});
-
-                var modelBefore = this.model.collection.at(this.model.get('position') - 1);
-
-                modelBefore.set({ position: modelBefore.get('position') + direction});
-
-                this.model.collection.sort();
-            }
-
-            return false;
         },
         render: function() {
             var json = this.model.toJSON();

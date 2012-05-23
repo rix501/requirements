@@ -23,7 +23,7 @@ function(Requirement, db) {
             this.sort();
         },
         update: function(model){
-            //model.save();
+            model.save();
         },
         comparator: function(model){
             return model.get('position');
