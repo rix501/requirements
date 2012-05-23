@@ -3,10 +3,8 @@
 <html lang="en">
 <head>
     <title>Requisita (Alpha)</title>
-
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />  
     <link rel="stylesheet" href="css/style.css" type="text/css" />  
-
     <!-- Templates -->
     <script type="text/template" id="page-template">
         <div class="navbar navbar-fixed-top">
@@ -118,7 +116,7 @@
     <script type="text/template" id="print-requirements-template">
         <div class="page-header">
             <h1>Print Preview</h1> 
-            <a href="#" class="btn print">Print</a></div>
+            <button class="btn print">Print</button></div>
         </div>
         <% _.each(collection, function(section){ %>
         <h2><%= section.number %>. <%= section.title %></h2>

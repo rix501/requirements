@@ -3,15 +3,19 @@ define([
     'models/RequirementsGroups',
     'models/Sections',
     'order!vendor/jquery.min',
-    'order!vendor/underscore.min', 
-    'order!vendor/backbone.min'
-], 
-function(Requirements, RequirementsGroups, Sections) {  
+    'order!vendor/underscore.min',
+    'order!vendor/backbone.min',
+    'vendor/FileSaver.min'
+],
+function(Requirements, RequirementsGroups, Sections) {
     return Backbone.View.extend({
+        events: {
+            'click .print':'print'
+        },
         template: _.template($("#print-requirements-template").html()),
         className: 'row-fluid',
         initialize: function() {
-            _.bindAll(this, 'render', 'add');
+            _.bindAll(this, 'render', 'add', 'print');
 
             this.collection = [];
 
@@ -28,7 +32,7 @@ function(Requirements, RequirementsGroups, Sections) {
 
             this.requirements.fetch({
                 conditions: { projectId: this.projectId }
-            }); 
+            });
             this.requirementsGroups.fetch({
                 conditions: { projectId: this.projectId }
             });
@@ -56,7 +60,7 @@ function(Requirements, RequirementsGroups, Sections) {
                             group: requirementsGroup.get('title'),
                             requirement: requirement.get('title'),
                             comments: requirement.get('commentsMD')
-                        }
+                        };
                     },this))
                     .value();
 
@@ -75,6 +79,13 @@ function(Requirements, RequirementsGroups, Sections) {
 
             this.render();
         }),
+        print: function(){
+            var BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
+
+            var bb = new BlobBuilder();
+            bb.append("Hello, world!");
+            saveAs(bb.getBlob("application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8"), "hello world.docx");
+        },
         render: function() {
             this.$el.html(this.template({_:_, collection: this.collection}));
 
