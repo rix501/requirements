@@ -9,8 +9,8 @@ function(EditItemView) {
         events: {
             "click .req-title" : "edit",
             "click .req-comments" : "edit",
-            "sortstop": "see",
-            "sortreceive": "saw"
+            "sortstop": "sort",
+            "sortreceive": "changeGroup"
         },
         template: _.template($("#item-template").html()),
         tagName: 'li',
@@ -31,13 +31,6 @@ function(EditItemView) {
             });
             editItemView.render();
         },
-        sort: function(event, ui){
-            //Let's get new position
-            var newPos = ui.item.parent().children('li').index(ui.item[0]) + 1;
-            var oldPos = this.model.get('position');
-
-            this.sup(oldPos, newPos);
-        },
         changeGroup: function(event, ui, model){
             this.model.collection.remove(this.model);
             model.get('reqs').add(this.model);
@@ -45,7 +38,14 @@ function(EditItemView) {
             this.group = model;
             this.render();
 
-            this.see(event, ui);
+            this.sort(event, ui);
+        },
+        sort: function(event, ui){
+            //Let's get new position
+            var newPos = ui.item.parent().children('li').index(ui.item[0]) + 1;
+            var oldPos = this.model.get('position');
+
+            this.reorder(oldPos, newPos);
         },
         reorder: function(oldPosition, newPosition){
             var id = this.model.id;
