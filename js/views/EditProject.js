@@ -1,15 +1,16 @@
 define([
     'models/Project',
     'order!vendor/jquery.min',
-    'order!vendor/underscore.min', 
+    'order!vendor/underscore.min',
     'order!vendor/backbone.min',
-    'order!vendor/bootstrap-transition', 
+    'order!vendor/bootstrap-transition',
     'order!vendor/bootstrap-modal'
-], 
-function(Project) {  
+],
+function(Project) {
     return Backbone.View.extend({
         events: {
             "click .save" : "save",
+            "click .delete" : "del",
             "hidden" : "remove"
         },
         template: _.template($("#edit-project-template").html()),
@@ -45,6 +46,35 @@ function(Project) {
                 });
             }
 
+            return false;
+        },
+        del: function(){
+            var sections;
+
+            //Delete children
+            if(this.model.collection){
+                sections = this.model.get('sections');
+
+                sections.each(function(section){
+                    var groups = section.get('reqs-groups');
+
+                    groups.each(function(group){
+                        var reqs = group.get('reqs');
+
+                        reqs.each(function(req){
+                            req.destroy();
+                        });
+
+                        group.destroy();
+                    });
+
+                    section.destroy();
+                });
+            }
+
+            this.model.destroy();
+            this.$el.modal('hide');
+            
             return false;
         },
         hide: function(){

@@ -1,16 +1,17 @@
 define([
     'models/Requirement',
     'order!vendor/jquery.min',
-    'order!vendor/underscore.min', 
+    'order!vendor/underscore.min',
     'order!vendor/backbone.min',
-    'order!vendor/bootstrap-transition', 
-    'order!vendor/bootstrap-modal', 
+    'order!vendor/bootstrap-transition',
+    'order!vendor/bootstrap-modal',
     'order!vendor/markdown'
-], 
-function(Requirement) {  
+],
+function(Requirement) {
     return Backbone.View.extend({
         events: {
             "click .save" : "save",
+            "click .delete" : "del",
             "hidden" : "remove"
         },
         template: _.template($("#edit-item-template").html()),
@@ -56,6 +57,12 @@ function(Requirement) {
                 });
             }
 
+            return false;
+        },
+        del: function(){
+            this.model.destroy();
+            this.$el.modal('hide');
+            
             return false;
         },
         hide: function(){

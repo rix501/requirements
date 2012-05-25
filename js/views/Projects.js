@@ -2,11 +2,11 @@ define([
     'models/Projects',
     'views/Project',
     'views/EditProject',
-    'order!vendor/jquery.min', 
-    'order!vendor/underscore.min', 
+    'order!vendor/jquery.min',
+    'order!vendor/underscore.min',
     'order!vendor/backbone.min'
-], 
-function(Projects, ProjectView, EditProjectView) {  
+],
+function(Projects, ProjectView, EditProjectView) {
     return Backbone.View.extend({
         events: {
             'click .add-project' : 'create'

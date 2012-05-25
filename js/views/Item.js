@@ -1,12 +1,13 @@
 define([
     'views/EditItem',
     'order!vendor/jquery.min',
-    'order!vendor/underscore.min', 
+    'order!vendor/underscore.min',
     'order!vendor/backbone.min'
-], 
-function(EditItemView) {  
+],
+function(EditItemView) {
     return Backbone.View.extend({
         events: {
+            "click .req-position" : "edit",
             "click .req-title" : "edit",
             "click .req-comments" : "edit",
             "sortstop": "sort",

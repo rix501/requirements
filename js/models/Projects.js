@@ -3,11 +3,11 @@ define([
     'models/Sections',
     'models/database',
     'order!vendor/jquery.min',
-    'order!vendor/underscore.min', 
+    'order!vendor/underscore.min',
     'order!vendor/backbone.min',
     'order!vendor/backbone.indexeddb'
-], 
-function(Project, Sections, db) {  
+],
+function(Project, Sections, db) {
     return Backbone.Collection.extend({
         initialize: function() {
             this.on('reset', this.addSections, this);
