@@ -113,7 +113,7 @@
             <a href="#" class="btn btn-primary save">Save changes</a>
         </div>
     </script>
-    <script type="text/template" id="print-requirements-template">
+    <script type="text/template" id="print-preview-requirements-template">
         <div class="page-header">
             <h1>Print Preview</h1> 
             <button class="btn print">Print</button></div>
@@ -141,6 +141,38 @@
             </tbody>
         </table>
         <% }); %>
+    </script>
+    <script type="text/template" id="print-requirements-template">
+        <html>
+        <head>
+        <style><%= style.print %></style>
+        </head>
+        <body>
+        <% _.each(collection, function(section){ %>
+        <h2><%= section.number %>. <%= section.title %></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Número</th>
+                    <th>Grupo</th>
+                    <th>Requerimiento</th>
+                    <th>Comentarios</th>
+                </tr>
+            </thead>
+            <tbody>
+            <% _.each(section.groups, function(req){ %>
+                <tr>
+                    <td><%= req.number %></th>
+                    <td><%= req.group %></th>
+                    <td><%= req.requirement %></th>
+                    <td><%= req.comments %></th>
+                </tr>
+            <% }); %>
+            </tbody>
+        </table>
+        <% }); %>
+        </body>
+        </htmL>
     </script>
     <script data-main="js/main" src="js/vendor/require.js"></script>
 </head>

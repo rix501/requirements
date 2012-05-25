@@ -2,17 +2,20 @@ define([
     'models/Requirements',
     'models/RequirementsGroups',
     'models/Sections',
+    'text!/css/bootstrap.min.css',
+    'text!/css/print.css',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min',
     'order!vendor/backbone.min',
     'vendor/FileSaver.min'
 ],
-function(Requirements, RequirementsGroups, Sections) {
+function(Requirements, RequirementsGroups, Sections, bootstrap, printStyle) {
     return Backbone.View.extend({
         events: {
             'click .print':'print'
         },
-        template: _.template($("#print-requirements-template").html()),
+        template: _.template($("#print-preview-requirements-template").html()),
+        printTemplate: _.template($("#print-requirements-template").html()),
         className: 'row-fluid',
         initialize: function() {
             _.bindAll(this, 'render', 'add', 'print');
@@ -83,8 +86,15 @@ function(Requirements, RequirementsGroups, Sections) {
             var BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
 
             var bb = new BlobBuilder();
-            bb.append("Hello, world!");
-            saveAs(bb.getBlob("application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8"), "hello world.docx");
+            bb.append(this.printTemplate({
+                _:_,
+                collection: this.collection,
+                style: {
+                    bootstrap: bootstrap,
+                    print: printStyle
+                }
+            }));
+            saveAs(bb.getBlob("text/html;charset=utf-8"), this.project.get('title') + "-requirements.html");
         },
         render: function() {
             this.$el.html(this.template({_:_, collection: this.collection}));
