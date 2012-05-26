@@ -12,9 +12,16 @@ function(Requirements, db) {
             this.set({
                 'reqs': new Requirements()
             });
+
+            this.on('add',this.addReqs, this);
         },
         defaults: {
             "title": ''
+        },
+        addReqs: function(){
+            this.set({
+                'reqs': new Requirements()
+            });
         },
         search : function(letters){
             if(letters === "") return this.get('reqs');

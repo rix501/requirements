@@ -75,7 +75,11 @@
         <div id="groups"></div>
     </script>
     <script type="text/template" id="group-template">
-        <h2><%= title %> <span class="count"><small>(<%= count %>)</small> </span> </h2> 
+        <div class="group-header">
+            <h2 class="group-title"><%= title %></h2>
+            <h2 class="group-count hidden"><small>(<%= count %>)</small> </h2>
+            <i class="icon-pencil edit"></i>
+        </div>
         <input class="search search-query span3" name="search" type="text" placeholder="Search Group">
         <div class="row-fluid">
             <ul class="reqs unstyled"></ul>
@@ -93,7 +97,7 @@
         </div>
         <div class="modal-footer">
             <a href="#" class="btn" data-dismiss="modal">Close</a>
-            <!-- <a href="#" class="btn btn-danger delete">Delete</a> -->
+            <a href="#" class="btn btn-danger delete">Delete</a>
             <a href="#" class="btn btn-primary save">Save changes</a>
         </div>
     </script>

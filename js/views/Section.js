@@ -1,12 +1,12 @@
 define([
     'views/List',
     'order!vendor/jquery.min',
-    'order!vendor/underscore.min', 
+    'order!vendor/underscore.min',
     'order!vendor/backbone.min'
-], 
-function(ListView) {  
+],
+function(ListView) {
     return Backbone.View.extend({
-        events: { 
+        events: {
             'click .section' : 'switchList'
         },
         template: _.template($("#section-template").html()),

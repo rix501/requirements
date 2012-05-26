@@ -44,7 +44,8 @@ function(RequirementsGroup) {
             }
             else if(this.collection){
                 this.collection.create(attrs, {
-                    success: this.hide
+                    success: this.hide,
+                    wait: true
                 });
             }
 
@@ -53,9 +54,11 @@ function(RequirementsGroup) {
         del: function(){
             var reqs = this.model.get('reqs');
 
-            reqs.each(function(req){
-                req.destroy();
-            });
+            if(reqs.models){
+                reqs.each(function(req){
+                    req.destroy();
+                });
+            }
 
             this.model.destroy();
             this.$el.modal('hide');

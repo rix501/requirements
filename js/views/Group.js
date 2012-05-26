@@ -1,22 +1,24 @@
 define([
     'views/EditItem',
+    'views/EditGroup',
     'views/Item',
     'order!vendor/jquery.min',
     'order!vendor/jquery.ui.min',
     'order!vendor/underscore.min',
     'order!vendor/backbone.min'
 ],
-function(EditItemView, ItemView) {
+function(EditItemView, EditGroupView, ItemView) {
     return Backbone.View.extend({
         events: {
-            "click h2" : "toggleList",
+            "click .group-title" : "toggleList",
             "click button": "create",
+            "click .edit": "edit",
             "keyup .search"  : "search"
         },
         template: _.template($("#group-template").html()),
         className: "reqgroup",
         initialize: function() {
-            _.bindAll(this, 'render', 'add', 'addAll', 'create', 'received', 'stop');
+            _.bindAll(this, 'render', 'add', 'addAll', 'create', 'received', 'stop', 'edit');
 
             this.collection = this.model.get('reqs');
             this.collection.bind('add', this.add, this);
@@ -54,6 +56,13 @@ function(EditItemView, ItemView) {
 
             return false;
         },
+        edit: function(){
+            var editGroupView = new EditGroupView({
+                model: this.model,
+                section: this.section
+            });
+            editGroupView.render();
+        },
         stop: function(event, ui){
             ui.item.trigger('sortstop', ui);
         },
@@ -64,11 +73,20 @@ function(EditItemView, ItemView) {
             var letters = this.$(".search").val();
             this.renderList(this.model.search(letters));
         },
+        toggle: function(selector){
+            var hiddenClass = 'hidden';
+            if(this.$(selector).hasClass(hiddenClass)){
+                this.$(selector).removeClass(hiddenClass);
+            }
+            else{
+                this.$(selector).addClass(hiddenClass);
+            }
+        },
         toggleList: function(){
-            this.$('ul.reqs').toggle();
-            this.$('.btn').toggle();
-            this.$('.search').toggle();
-            this.$('.count').toggle();
+            this.toggle('ul.reqs');
+            this.toggle('.btn');
+            this.toggle('.search');
+            this.toggle('.group-count');
         },
         renderList : function(reqs){
             this.$("ul.reqs").html('');

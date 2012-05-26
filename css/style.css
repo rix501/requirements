@@ -2,6 +2,10 @@ body {
     padding: 50px;
 }
 
+.hidden {
+    display: none !important;
+}
+
 .sortable-dragging {
     border: 1px solid red;
     background: none;
@@ -44,17 +48,27 @@ body {
     float: right;
 }
 
+.group-header {
+    display: inline;
+}
+
+.icon-pencil {
+    display: none;
+    cursor: pointer;
+}
+
+.group-header:hover .icon-pencil { 
+    display: inline-block; 
+}
+
 .reqgroup {
     margin-bottom: 60px;
 }
 
-.reqgroup h2 {
+.group-title,
+.group-count {
     display: inline;
     cursor: pointer;
-}
-
-.reqgroup h2 .count{
-    display: none;
 }
 
 .reqgroup button,

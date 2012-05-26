@@ -18,6 +18,7 @@ function(GroupView, EditGroupView) {
 
             this.collection.bind('reset', this.addAll, this);
             this.collection.bind('add', this.add, this);
+            this.collection.bind('destroy', this.render, this);
 
             this.sectionId = this.options.sectionId;
             this.section = this.options.section;
