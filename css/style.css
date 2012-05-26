@@ -33,9 +33,19 @@ body {
     display: inline-block;
     margin-right: 20px;
 }
+.list-header {
+    padding-bottom:  10px;
+    text-align: center;
+    border-bottom: 1px solid #999;
+    margin-bottom: 20px;
+}
+
+.list-header .create-group {
+    float: right;
+}
 
 .reqgroup {
-    margin-bottom: 20px;
+    margin-bottom: 60px;
 }
 
 .reqgroup h2 {
@@ -50,10 +60,6 @@ body {
 .reqgroup button,
 .reqgroup .search {
     float: right;
-}
-
-.reqgroup .search {
-    margin-right: 20px;
 }
 
 .reqs:first-child {

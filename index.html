@@ -64,25 +64,37 @@
         <li class="divider"></li>
         <li><a href="#" class="add-section">Add</a></li>
     </script>
+    <script type="text/template" id="sections-collapsed-template">
+        <div class="">Sections</div>
+    </script>
     <script type="text/template" id="list-template">
-        <div class="form-horizontal">
-            <label for="group-title">Group Title:</label>
-            <input class="group-title" name="group-title" type="text">
-            <button class="btn create-group">New Group</button> 
+        <div class="list-header">
+            <input class="search-all search-query" name="search-all" type="text" placeholder="Search List">
+            <button class="btn create-group">New Group</button>
         </div>
-        <div class="form-horizontal">
-            <label for="search-all">Search:</label>
-            <input class="search-all" name="search-all" type="text">
-        </div>
-        <hr>
         <div id="groups"></div>
     </script>
     <script type="text/template" id="group-template">
         <h2><%= title %> <span class="count"><small>(<%= count %>)</small> </span> </h2> 
-        <button class="btn">New</button>
-        <input class="search span3" name="search" type="text" placeholder="Search">
+        <input class="search search-query span3" name="search" type="text" placeholder="Search Group">
         <div class="row-fluid">
             <ul class="reqs unstyled"></ul>
+        </div>
+        <button class="btn">New</button>
+    </script>
+    <script type="text/template" id="edit-group-template">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>Edit Group</h3>
+        </div>
+        <div class="modal-body">
+            <label for="edit-title">Title:</label>
+            <input class="edit-title span6" name="edit-title" type="text" value="<%= title %>">
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
+            <!-- <a href="#" class="btn btn-danger delete">Delete</a> -->
+            <a href="#" class="btn btn-primary save">Save changes</a>
         </div>
     </script>
     <script type="text/template" id="item-template">

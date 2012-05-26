@@ -2,19 +2,22 @@ define([
     'models/Requirements',
     'models/database',
     'order!vendor/jquery.min',
-    'order!vendor/underscore.min', 
+    'order!vendor/underscore.min',
     'order!vendor/backbone.min',
     'order!vendor/backbone.indexeddb'
-], 
-function(Requirements, db) {  
+],
+function(Requirements, db) {
     return Backbone.Model.extend({
         initialize: function() {
             this.set({
                 'reqs': new Requirements()
             });
         },
+        defaults: {
+            "title": ''
+        },
         search : function(letters){
-            if(letters == "") return this.get('reqs');
+            if(letters === "") return this.get('reqs');
      
             var pattern = new RegExp(letters,"gi");
             return _(this.get('reqs').filter(function(req) {

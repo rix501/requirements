@@ -1,10 +1,11 @@
 define([
     'views/Group',
+    'views/EditGroup',
     'order!vendor/jquery.min',
-    'order!vendor/underscore.min', 
+    'order!vendor/underscore.min',
     'order!vendor/backbone.min'
-], 
-function(GroupView) {  
+],
+function(GroupView, EditGroupView) {
     return Backbone.View.extend({
         events: {
             "click .create-group": "create",
@@ -32,16 +33,13 @@ function(GroupView) {
             this.collection.each(this.add);
         },
         create: function(){
-            if (!this.input.val()) return;
-       
-            this.collection.create({
-                title: this.input.val(),
-                sectionId: this.sectionId,
-                projectId: this.section.get('projectId'),
-                position: this.collection.length + 1
+            var editGroupView = new EditGroupView({
+                collection: this.collection,
+                section: this.section
             });
+            editGroupView.render();
 
-            this.input.val('');
+            return false;
         },
         updateOnEnter: function(event){
             if (event.keyCode == 13) this.create();
@@ -64,7 +62,7 @@ function(GroupView) {
 
             this.collection.fetch({
                 conditions: { sectionId: this.sectionId }
-            }); 
+            });
 
             return this;
         }
