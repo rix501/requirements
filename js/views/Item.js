@@ -1,22 +1,23 @@
 define([
     'views/EditItem',
     'order!vendor/jquery.min',
-    'order!vendor/underscore.min', 
+    'order!vendor/underscore.min',
     'order!vendor/backbone.min'
-], 
-function(EditItemView) {  
+],
+function(EditItemView) {
     return Backbone.View.extend({
         events: {
+            "click .req-position" : "edit",
             "click .req-title" : "edit",
             "click .req-comments" : "edit",
-            "click .up" : "up",
-            "click .down" : "down"
+            "sortstop": "sort",
+            "sortreceive": "changeGroup"
         },
         template: _.template($("#item-template").html()),
         tagName: 'li',
         className: 'req-item',
         initialize: function() {
-            _.bindAll(this, 'render', 'edit', 'up', 'down', 'reorder');
+            _.bindAll(this, 'render', 'edit', 'reorder', 'sort', 'changeGroup');
 
             this.model.bind('change', this.render, this);
 
@@ -31,30 +32,50 @@ function(EditItemView) {
             });
             editItemView.render();
         },
-        up: function(event){
-            this.reorder(1);
+        changeGroup: function(event, ui, model){
+            this.model.collection.remove(this.model);
+            model.get('reqs').add(this.model);
+            this.model.set({groupId: model.id});
+            this.group = model;
+            this.render();
 
-            return false;
+            this.sort(event, ui);
         },
-        down: function(event){
-            this.reorder(-1);
+        sort: function(event, ui){
+            //Let's get new position
+            var newPos = ui.item.parent().children('li').index(ui.item[0]) + 1;
+            var oldPos = this.model.get('position');
 
-            return false;
+            this.reorder(oldPos, newPos);
         },
-        reorder: function(direction){
-            // + 1 goes up, - 1 goes down
+        reorder: function(oldPosition, newPosition){
+            var id = this.model.id;
 
-            if( (this.model.get('position') - direction) > 0 && (this.model.get('position') - direction) <=  this.model.collection.length){
-                this.model.set({ position: this.model.get('position') - direction});
+            var silent = {silent:true};
 
-                var modelBefore = this.model.collection.at(this.model.get('position') - 1);
+            this.model.collection.chain()
+            .select(function(model){
+                return model.id != id;
+            })
+            .each(function(model, index, list){
+                model.set({ position: index + 1}, silent);
+            });
 
-                modelBefore.set({ position: modelBefore.get('position') + direction});
+            this.model.collection.chain()
+            .select(function(model){
+                return model.id != id && model.get('position') >= newPosition;
+            })
+            .each(function(model, index, list){
+                model.set({ position: model.get('position') + 1}, silent);
+            });
 
-                this.model.collection.sort();
-            }
+            this.model.set({ position: newPosition}, silent);
 
-            return false;
+            this.model.collection.each(function(model){
+                model.trigger('change:position', model);
+            });
+
+            this.model.collection.sort();
         },
         render: function() {
             var json = this.model.toJSON();

@@ -1,53 +1,45 @@
 define([
-    'models/Requirement',
+    'models/RequirementsGroup',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min',
     'order!vendor/backbone.min',
     'order!vendor/bootstrap-transition',
-    'order!vendor/bootstrap-modal',
-    'order!vendor/markdown'
+    'order!vendor/bootstrap-modal'
 ],
-function(Requirement) {
+function(RequirementsGroup) {
     return Backbone.View.extend({
         events: {
             "click .save" : "save",
             "click .delete" : "del",
             "hidden" : "remove"
         },
-        template: _.template($("#edit-item-template").html()),
+        template: _.template($("#edit-group-template").html()),
         tagName: 'div',
         className: 'modal fade edit-item-modal',
         initialize: function() {
             _.bindAll(this, 'render', 'save', 'hide', 'remove');
 
-            this.groupId = (this.options.groupId) ? this.options.groupId : this.model.get('groupId');
+            this.section = this.options.section;
 
             if(!_.isUndefined(this.collection) && _.isUndefined(this.model)){
-                this.model = new Requirement({
-                    position: this.collection.length + 1
+                this.model = new RequirementsGroup({
+                    position: (this.collection.length + 1)
                 });
             }
-
-            this.section = this.options.section;
-            this.group = this.options.group;
         },
         save: function(){
             if (!this.$('.edit-title').val()) return false;
 
             var attrs = {
                 title: this.$('.edit-title').val(),
-                comments: this.$('.edit-comments').val(),
-                commentsMD: markdown.toHTML( this.$('.edit-comments').val() ),
-                groupId: this.groupId,
                 sectionId: this.section.id,
                 projectId: this.section.get('projectId'),
-                position: (this.collection) ? this.collection.length + 1 : (this.model.collection) ? this.model.get('position') : 1
+                position: this.collection.length + 1
             };
 
             if(this.model.collection){
                 this.model.save(attrs, {
-                    success: this.hide,
-                    wait: true
+                    success: this.hide
                 });
             }
             else if(this.collection){
@@ -60,6 +52,14 @@ function(Requirement) {
             return false;
         },
         del: function(){
+            var reqs = this.model.get('reqs');
+
+            if(reqs.models){
+                reqs.each(function(req){
+                    req.destroy();
+                });
+            }
+
             this.model.destroy();
             this.$el.modal('hide');
             
@@ -72,10 +72,7 @@ function(Requirement) {
             this.$el.remove();
         },
         render: function() {
-            var json = this.model.toJSON();
-            json.positionString = this.section.get('position') + '.' + this.group.get('position') + '.' + this.model.get('position');
-
-            this.$el.html(this.template(json));
+            this.$el.html(this.template(this.model.toJSON()));
             this.$el.modal('show');
             return this;
         }

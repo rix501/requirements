@@ -2,6 +2,20 @@ body {
     padding: 50px;
 }
 
+.hidden {
+    display: none !important;
+}
+
+.sortable-dragging {
+    border: 1px solid red;
+    background: none;
+}
+
+.sortable-placeholder {
+    border: 1px dashed blue;
+    background: none;
+}
+
 .page-header h1 {
     display: inline;
 }
@@ -9,6 +23,10 @@ body {
 .page-header button,
 .page-header a {
     float: right;
+}
+
+.project-title {
+    cursor: pointer;
 }
 
 .sections input {
@@ -19,27 +37,43 @@ body {
     display: inline-block;
     margin-right: 20px;
 }
-
-.reqgroup {
+.list-header {
+    padding-bottom:  10px;
+    text-align: center;
+    border-bottom: 1px solid #999;
     margin-bottom: 20px;
 }
 
-.reqgroup h2 {
+.list-header .create-group {
+    float: right;
+}
+
+.group-header {
     display: inline;
+}
+
+.icon-pencil {
+    display: none;
     cursor: pointer;
 }
 
-.reqgroup h2 .count{
-    display: none;
+.group-header:hover .icon-pencil { 
+    display: inline-block; 
+}
+
+.reqgroup {
+    margin-bottom: 60px;
+}
+
+.group-title,
+.group-count {
+    display: inline;
+    cursor: pointer;
 }
 
 .reqgroup button,
 .reqgroup .search {
     float: right;
-}
-
-.reqgroup .search {
-    margin-right: 20px;
 }
 
 .reqs:first-child {

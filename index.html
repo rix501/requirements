@@ -3,10 +3,8 @@
 <html lang="en">
 <head>
     <title>Requisita (Alpha)</title>
-
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />  
     <link rel="stylesheet" href="css/style.css" type="text/css" />  
-
     <!-- Templates -->
     <script type="text/template" id="page-template">
         <div class="navbar navbar-fixed-top">
@@ -24,7 +22,7 @@
         <div id="content" class="container-fluid"></div>
     </script>
     <script type="text/template" id="project-template">
-        <h3><%= title %></h3>
+        <h3 class="project-title"><%= title %></h3>
         <br />
         <div class="btn-group">
             <a href="#/<% if(typeof id != 'undefined') print(id) %>/requirements" class="btn">Requirements</a>
@@ -46,13 +44,14 @@
         </div>
         <div class="modal-footer">
             <a href="#" class="btn" data-dismiss="modal">Close</a>
+            <a href="#" class="btn btn-danger delete">Delete</a>
             <a href="#" class="btn btn-primary save">Save changes</a>
         </div>
     </script>
     <script type="text/template" id="requirements-template">
         <div class="page-header">
             <h1>Requirements for <%=  window.Projects.get(projectId).get('title') %></h1> 
-            <a href="#/<%= projectId %>/print/requirements" class="btn print">Print</a></div>
+            <a href="#/<%= projectId %>/print/requirements" class="btn print">Print Preview</a></div>
         </div>
         <div class="span3 well sidebar-nav sections"></div>
         <div class="list span8"></div>
@@ -65,39 +64,53 @@
         <li class="divider"></li>
         <li><a href="#" class="add-section">Add</a></li>
     </script>
+    <script type="text/template" id="sections-collapsed-template">
+        <div class="">Sections</div>
+    </script>
     <script type="text/template" id="list-template">
-        <div class="form-horizontal">
-            <label for="group-title">Group Title:</label>
-            <input class="group-title" name="group-title" type="text">
-            <button class="btn create-group">New Group</button> 
+        <div class="list-header">
+            <input class="search-all search-query" name="search-all" type="text" placeholder="Search List">
+            <button class="btn create-group">New Group</button>
         </div>
-        <div class="form-horizontal">
-            <label for="search-all">Search:</label>
-            <input class="search-all" name="search-all" type="text">
-        </div>
-        <hr>
         <div id="groups"></div>
     </script>
     <script type="text/template" id="group-template">
-        <h2><%= title %> <span class="count"><small>(<%= count %>)</small> </span> </h2> 
-        <button class="btn">New</button>
-        <input class="search span3" name="search" type="text" placeholder="Search">
+        <div class="group-header">
+            <h2 class="group-title"><%= title %></h2>
+            <h2 class="group-count hidden"><small>(<%= count %>)</small> </h2>
+            <i class="icon-pencil edit"></i>
+        </div>
+        <input class="search search-query span3" name="search" type="text" placeholder="Search Group">
         <div class="row-fluid">
             <ul class="reqs unstyled"></ul>
         </div>
+        <button class="btn">New</button>
+    </script>
+    <script type="text/template" id="edit-group-template">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>Edit Group</h3>
+        </div>
+        <div class="modal-body">
+            <label for="edit-title">Title:</label>
+            <input class="edit-title span6" name="edit-title" type="text" value="<%= title %>">
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
+            <!-- <a href="#" class="btn btn-danger delete">Delete</a> -->
+            <a href="#" class="btn btn-primary save">Save changes</a>
+        </div>
     </script>
     <script type="text/template" id="item-template">
-
         <div class="row-fluid">
+            <div class="span2 req-position">
+                <h3> <%= positionString %> :</h3>
+            </div>
             <div class="span3 req-title">
-                <h3> <%= positionString %> : <%= title %> </h3>
+                <%= title %>
             </div>
-            <div class="span5 req-comments">
+            <div class="span7 req-comments">
                 <span class="md-comments"><%= commentsMD %></span>
-            </div>
-            <div class="span4">
-                <button class="btn up">Up</button>
-                <button class="btn down">Down</button>
             </div>
         </div>
     </script>
@@ -114,10 +127,15 @@
         </div>
         <div class="modal-footer">
             <a href="#" class="btn" data-dismiss="modal">Close</a>
+            <a href="#" class="btn btn-danger delete">Delete</a>
             <a href="#" class="btn btn-primary save">Save changes</a>
         </div>
     </script>
-    <script type="text/template" id="print-requirements-template">
+    <script type="text/template" id="print-preview-requirements-template">
+        <div class="page-header">
+            <h1>Print Preview</h1> 
+            <button class="btn print">Print</button></div>
+        </div>
         <% _.each(collection, function(section){ %>
         <h2><%= section.number %>. <%= section.title %></h2>
         <table class="table table-striped table-bordered table-condensed">
@@ -141,6 +159,38 @@
             </tbody>
         </table>
         <% }); %>
+    </script>
+    <script type="text/template" id="print-requirements-template">
+        <html>
+        <head>
+        <style><%= style.print %></style>
+        </head>
+        <body>
+        <% _.each(collection, function(section){ %>
+        <h2><%= section.number %>. <%= section.title %></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Número</th>
+                    <th>Grupo</th>
+                    <th>Requerimiento</th>
+                    <th>Comentarios</th>
+                </tr>
+            </thead>
+            <tbody>
+            <% _.each(section.groups, function(req){ %>
+                <tr>
+                    <td><%= req.number %></th>
+                    <td><%= req.group %></th>
+                    <td><%= req.requirement %></th>
+                    <td><%= req.comments %></th>
+                </tr>
+            <% }); %>
+            </tbody>
+        </table>
+        <% }); %>
+        </body>
+        </htmL>
     </script>
     <script data-main="js/main" src="js/vendor/require.js"></script>
 </head>

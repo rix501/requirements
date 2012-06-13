@@ -2,10 +2,10 @@ define([
     'models/Sections',
     'views/Section',
     'order!vendor/jquery.min',
-    'order!vendor/underscore.min', 
+    'order!vendor/underscore.min',
     'order!vendor/backbone.min'
-], 
-function(Sections, SectionView) {  
+],
+function(Sections, SectionView) {
     return Backbone.View.extend({
         events: {
             'click .add-section' : 'edit',
@@ -29,7 +29,7 @@ function(Sections, SectionView) {
             var input = this.$('.section-title');
             var title = input.val();
 
-            if(title == '') input.remove();
+            if(title === '') input.remove();
         },
         editPress: function(event){
             if (event.keyCode == 13) this.create();
@@ -47,7 +47,7 @@ function(Sections, SectionView) {
             var title = input.val();
             input.remove();
 
-            if(title != ''){
+            if(title !== ''){
                 this.collection.create({
                     title: title,
                     position: this.collection.length + 1,
@@ -69,7 +69,7 @@ function(Sections, SectionView) {
             
             this.collection.fetch({
                 conditions: { projectId: this.projectId }
-            }); 
+            });
 
             return this;
         }

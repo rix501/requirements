@@ -2,16 +2,23 @@ define([
     'models/Requirements',
     'models/RequirementsGroups',
     'models/Sections',
+    'text!/css/bootstrap.min.css',
+    'text!/css/print.css',
     'order!vendor/jquery.min',
-    'order!vendor/underscore.min', 
-    'order!vendor/backbone.min'
-], 
-function(Requirements, RequirementsGroups, Sections) {  
+    'order!vendor/underscore.min',
+    'order!vendor/backbone.min',
+    'vendor/FileSaver.min'
+],
+function(Requirements, RequirementsGroups, Sections, bootstrap, printStyle) {
     return Backbone.View.extend({
-        template: _.template($("#print-requirements-template").html()),
+        events: {
+            'click .print':'print'
+        },
+        template: _.template($("#print-preview-requirements-template").html()),
+        printTemplate: _.template($("#print-requirements-template").html()),
         className: 'row-fluid',
         initialize: function() {
-            _.bindAll(this, 'render', 'add');
+            _.bindAll(this, 'render', 'add', 'print');
 
             this.collection = [];
 
@@ -28,7 +35,7 @@ function(Requirements, RequirementsGroups, Sections) {
 
             this.requirements.fetch({
                 conditions: { projectId: this.projectId }
-            }); 
+            });
             this.requirementsGroups.fetch({
                 conditions: { projectId: this.projectId }
             });
@@ -56,7 +63,7 @@ function(Requirements, RequirementsGroups, Sections) {
                             group: requirementsGroup.get('title'),
                             requirement: requirement.get('title'),
                             comments: requirement.get('commentsMD')
-                        }
+                        };
                     },this))
                     .value();
 
@@ -75,6 +82,20 @@ function(Requirements, RequirementsGroups, Sections) {
 
             this.render();
         }),
+        print: function(){
+            var BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
+
+            var bb = new BlobBuilder();
+            bb.append(this.printTemplate({
+                _:_,
+                collection: this.collection,
+                style: {
+                    bootstrap: bootstrap,
+                    print: printStyle
+                }
+            }));
+            saveAs(bb.getBlob("text/html;charset=utf-8"), this.project.get('title') + "-requirements.html");
+        },
         render: function() {
             this.$el.html(this.template({_:_, collection: this.collection}));
 

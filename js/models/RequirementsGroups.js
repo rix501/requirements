@@ -1,16 +1,17 @@
 define([
     'models/RequirementsGroup',
+    'models/Requirements',
     'models/database',
     'order!vendor/jquery.min',
-    'order!vendor/underscore.min', 
+    'order!vendor/underscore.min',
     'order!vendor/backbone.min',
     'order!vendor/backbone.indexeddb'
-], 
-function(RequirementsGroup, db) {  
+],
+function(RequirementsGroup, Requirements, db) {
     return Backbone.Collection.extend({
         model: RequirementsGroup,
         search : function(letters){
-            if(letters == "") return this;
+            if(letters === "") return this;
      
             var pattern = new RegExp(letters,"gi");
             return _(this.filter(function(reqsGroup) {

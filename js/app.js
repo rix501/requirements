@@ -5,10 +5,10 @@ define([
     'views/Requirements',
     'views/PrintRequirements',
     'order!vendor/jquery.min',
-    'order!vendor/underscore.min', 
+    'order!vendor/underscore.min',
     'order!vendor/backbone.min'
-], 
-function(Projects, PageView, ProjectsView, RequirementsView, PrintRequirementsView) {  
+],
+function(Projects, PageView, ProjectsView, RequirementsView, PrintRequirementsView) {
     return Backbone.Router.extend({
         routes: {
             '': 'home',
