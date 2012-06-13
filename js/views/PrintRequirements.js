@@ -7,6 +7,7 @@ define([
     'order!vendor/jquery.min',
     'order!vendor/underscore.min',
     'order!vendor/backbone.min',
+    'vendor/mustache',
     'vendor/FileSaver.min'
 ],
 function(Requirements, RequirementsGroups, Sections, bootstrap, printStyle) {
@@ -14,8 +15,8 @@ function(Requirements, RequirementsGroups, Sections, bootstrap, printStyle) {
         events: {
             'click .print':'print'
         },
-        template: _.template($("#print-preview-requirements-template").html()),
-        printTemplate: _.template($("#print-requirements-template").html()),
+        template: Mustache.compile($("#print-preview-requirements-template").html()),
+        printTemplate: Mustache.compile($("#print-requirements-template").html()),
         className: 'row-fluid',
         initialize: function() {
             _.bindAll(this, 'render', 'add', 'print');

@@ -2,14 +2,15 @@ define([
     'views/EditProject',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min',
-    'order!vendor/backbone.min'
+    'order!vendor/backbone.min',
+    'vendor/mustache'
 ],
 function(EditProjectView) {
     return Backbone.View.extend({
         events: {
             "click .project-title" : "edit"
         },
-        template: _.template($("#project-template").html()),
+        template: Mustache.compile($("#project-template").html()),
         className: 'project span2 well',
         initialize: function() {
             _.bindAll(this, 'render');

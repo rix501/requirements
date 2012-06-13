@@ -4,14 +4,15 @@ define([
     'views/EditProject',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min',
-    'order!vendor/backbone.min'
+    'order!vendor/backbone.min',
+    'vendor/mustache'
 ],
 function(Projects, ProjectView, EditProjectView) {
     return Backbone.View.extend({
         events: {
             'click .add-project' : 'create'
         },
-        template: _.template($("#projects-template").html()),
+        template: Mustache.compile($("#projects-template").html()),
         className: 'row-fluid',
         initialize: function() {
             _.bindAll(this, 'render', 'add', 'addAll', 'create');

@@ -5,7 +5,8 @@ define([
     'order!vendor/jquery.min',
     'order!vendor/jquery.ui.min',
     'order!vendor/underscore.min',
-    'order!vendor/backbone.min'
+    'order!vendor/backbone.min',
+    'vendor/mustache'
 ],
 function(EditItemView, EditGroupView, ItemView) {
     return Backbone.View.extend({
@@ -15,7 +16,7 @@ function(EditItemView, EditGroupView, ItemView) {
             "click .edit": "edit",
             "keyup .search"  : "search"
         },
-        template: _.template($("#group-template").html()),
+        template: Mustache.compile($("#group-template").html()),
         className: "reqgroup",
         initialize: function() {
             _.bindAll(this, 'render', 'add', 'addAll', 'create', 'received', 'stop', 'edit');

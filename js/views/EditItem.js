@@ -5,7 +5,8 @@ define([
     'order!vendor/backbone.min',
     'order!vendor/bootstrap-transition',
     'order!vendor/bootstrap-modal',
-    'order!vendor/markdown'
+    'order!vendor/markdown',
+    'vendor/mustache'
 ],
 function(Requirement) {
     return Backbone.View.extend({
@@ -14,7 +15,7 @@ function(Requirement) {
             "click .delete" : "del",
             "hidden" : "remove"
         },
-        template: _.template($("#edit-item-template").html()),
+        template: Mustache.compile($("#edit-item-template").html()),
         tagName: 'div',
         className: 'modal fade edit-item-modal',
         initialize: function() {

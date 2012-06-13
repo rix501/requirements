@@ -2,7 +2,8 @@ define([
     'views/EditItem',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min',
-    'order!vendor/backbone.min'
+    'order!vendor/backbone.min',
+    'vendor/mustache'
 ],
 function(EditItemView) {
     return Backbone.View.extend({
@@ -13,7 +14,7 @@ function(EditItemView) {
             "sortstop": "sort",
             "sortreceive": "changeGroup"
         },
-        template: _.template($("#item-template").html()),
+        template: Mustache.compile($("#item-template").html()),
         tagName: 'li',
         className: 'req-item',
         initialize: function() {

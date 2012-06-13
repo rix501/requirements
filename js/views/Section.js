@@ -2,14 +2,15 @@ define([
     'views/List',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min',
-    'order!vendor/backbone.min'
+    'order!vendor/backbone.min',
+    'vendor/mustache'
 ],
 function(ListView) {
     return Backbone.View.extend({
         events: {
             'click .section' : 'switchList'
         },
-        template: _.template($("#section-template").html()),
+        template: Mustache.compile($("#section-template").html()),
         tagName: 'li',
         initialize: function() {
             _.bindAll(this, 'render');

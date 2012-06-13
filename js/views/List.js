@@ -3,7 +3,8 @@ define([
     'views/EditGroup',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min',
-    'order!vendor/backbone.min'
+    'order!vendor/backbone.min',
+    'vendor/mustache'
 ],
 function(GroupView, EditGroupView) {
     return Backbone.View.extend({
@@ -12,7 +13,7 @@ function(GroupView, EditGroupView) {
             "keypress .group-title"  : "updateOnEnter",
             "keyup .search-all"  : "search"
         },
-        template: _.template($("#list-template").html()),
+        template: Mustache.compile($("#list-template").html()),
         initialize: function() {
             _.bindAll(this, 'render', 'add', 'addAll', 'create');
 

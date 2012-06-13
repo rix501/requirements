@@ -3,7 +3,8 @@ define([
     'views/Section',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min',
-    'order!vendor/backbone.min'
+    'order!vendor/backbone.min',
+    'vendor/mustache'
 ],
 function(Sections, SectionView) {
     return Backbone.View.extend({
@@ -12,7 +13,7 @@ function(Sections, SectionView) {
             'keypress .section-title'  : 'editPress',
             'blur .section-title' : 'blured'
         },
-        template: _.template($("#sections-template").html()),
+        template: Mustache.compile($("#sections-template").html()),
         tagName: 'ul',
         className: 'nav nav-list',
         initialize: function() {

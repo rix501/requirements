@@ -2,11 +2,12 @@ define([
     'views/Sections',
     'order!vendor/jquery.min',
     'order!vendor/underscore.min',
-    'order!vendor/backbone.min'
+    'order!vendor/backbone.min',
+    'vendor/mustache'
 ],
 function(SectionsView) {
     return Backbone.View.extend({
-        template: _.template($("#requirements-template").html()),
+        template: Mustache.compile($("#requirements-template").html()),
         className: 'row-fluid',
         initialize: function() {
             _.bindAll(this, 'render');
@@ -14,7 +15,10 @@ function(SectionsView) {
             this.projectId = this.options.projectId;
         },
         render: function() {
-            this.$el.html(this.template({ projectId: this.projectId }));
+            this.$el.html(this.template({ 
+                projectId: this.projectId,
+                projectTitle: window.Projects.get(this.projectId).get('title') 
+            }));
             
             var sectionsView = new SectionsView({
                 projectId: this.projectId
