@@ -2,6 +2,7 @@ define([
     'views/EditItem',
     'views/Item',
     'order!vendor/jquery.min',
+    'order!vendor/jquery.sortable',
     'order!vendor/underscore.min', 
     'order!vendor/backbone.min'
 ], 
@@ -38,6 +39,8 @@ function(EditItemView, ItemView) {
                 group: this.model
             });
             this.$("ul.reqs").append(view.render().el);
+
+            this.$("ul.reqs").sortable();
         },
         addAll: function(){
             this.collection.each(this.add);
